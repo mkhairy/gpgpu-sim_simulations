@@ -74,8 +74,8 @@ options.apps_yml = common.file_option_test( options.apps_yml, "", this_directory
 
 stat_map = {}
 configs = set()
-apps_and_args = set()
-exes_and_args = set()
+apps_and_args = []
+exes_and_args = []
 specific_jobIds = {}
 
 stats_to_pull = {}
@@ -128,10 +128,10 @@ else:
             for line in f:
                 time, jobId, app ,args, config, jobname = line.split()
                 configs.add(config)
-                app_and_args = os.path.join( app, args )
-                apps_and_args.add( app_and_args )
-                exe_and_args = os.path.join( os.path.basename(app), args )
-                exes_and_args.add( exe_and_args )
+                app_and_args = os.path.join( app.replace('/','_'), args )
+                apps_and_args.append( app_and_args )
+                exe_and_args = os.path.join( os.path.basename(app), args)
+                exes_and_args.append(exe_and_args)
                 specific_jobIds[ config + app_and_args ] = jobId
 
 for idx, app_and_args in enumerate(apps_and_args):
