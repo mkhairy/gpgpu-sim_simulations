@@ -73,7 +73,7 @@ proxy-apps: data
 	#chmod +x cuda/proxy-apps-doe/comd/cmd_compile.sh
 	#( cd cuda/proxy-apps-doe/comd ; ./cmd_compile.sh) 
 	$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/lulesh
-	$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/minife_matvec_ell
+	#$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/minife_matvec_ell
 	$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/xsbench
 
 clean_rodinia_2.0-ft:
