@@ -4,26 +4,51 @@ import subprocess
 import re
 import os
 import yaml
+import glob
 
-def parse_app_yml( app_yml ):
-    benchmark_yaml = yaml.load(open(app_yml))
-    benchmarks = []
-    for suite in benchmark_yaml['run']:
+this_directory = os.path.dirname(os.path.realpath(__file__)) + "/"
+
+defined_apps = {}
+defined_configs = {}
+
+def load_defined_yamls():
+    define_yamls = glob.glob(os.path.join(this_directory, 'apps/define-*.yml'))
+    for def_yaml in define_yamls:
+        parse_app_definition_yaml( os.path.join(this_directory, 'apps', def_yaml), defined_apps)
+    define_yamls = glob.glob(os.path.join(this_directory, 'configs/define-*.yml'))
+    for def_yaml in define_yamls:
+        parse_config_definition_yaml( os.path.join(this_directory, 'configs', def_yaml), defined_configs )
+
+def parse_app_definition_yaml( def_yml, apps ):
+    benchmark_yaml = yaml.load(open(def_yml))
+    for suite in benchmark_yaml:
+        apps[suite] = []
         for exe in benchmark_yaml[suite]['execs']:
             exe_name = exe.keys()[0]
             args_list = exe.values()[0]
-            benchmarks.append( ( benchmark_yaml[suite]['exec_dir'],
+            apps[suite].append(( benchmark_yaml[suite]['exec_dir'],
                                  benchmark_yaml[suite]['data_dirs'],
-                                 exe_name, args_list ) )
+                                 exe_name, args_list ))
+    return
+
+def parse_config_definition_yaml( def_yml, configurations ):
+    configs_yaml = yaml.load(open( def_yml ))
+    for config in configs_yaml:
+        gpgpusim_conf = os.path.expandvars(configs_yaml[config]['base_file'])
+        configurations[config] = ( config, configs_yaml[config]['extra_params'], gpgpusim_conf )
+    return
+
+def gen_apps_from_suite_list( app_list ):
+    benchmarks = []
+    for app in app_list:
+        benchmarks += defined_apps[app]
     return benchmarks
 
-def parse_config_yml( config_yml ):
-    configs_yaml = yaml.load(open( config_yml ))
-    configurations = []
-    for config in configs_yaml['run']:
-        gpgpusim_conf = os.path.expandvars(configs_yaml[config]['base_file'])
-        configurations.append( ( config, configs_yaml[config]['extra_params'], gpgpusim_conf ) )
-    return configurations
+def gen_configs_from_list( cfg_list ):
+    configs = []
+    for cfg in cfg_list:
+        configs.append(defined_configs[cfg])
+    return configs
 
 def get_cuda_version(this_directory):
     # Get CUDA version
@@ -35,6 +60,7 @@ def get_cuda_version(this_directory):
     cuda_version = re.sub(r".*release (\d+\.\d+).*", r"\1", nvcc_out_file.read().strip().replace("\n"," "))
     nvcc_out_file.close()
     os.remove(nvcc_out_filename)
+    os.environ['CUDA_VERSION'] = cuda_version
     return cuda_version
 
 # This function exists so that this file can accept both absolute and relative paths
@@ -67,12 +93,14 @@ def dir_option_test(name, default, this_directory):
 
 def parse_run_simulations_options():
     parser = OptionParser()
-    parser.add_option("-c", "--configs_file", dest="configs_file",
-                  help="configs_file used to determine which configurations are run",
-                  default="")
-    parser.add_option("-b", "--benchmark_file", dest="benchmark_file",
-                  help="the yaml file used to define which benchmarks are run",
-                  default="")
+    parser.add_option("-B", "--benchmark_list", dest="benchmark_list",
+                  help="a comma seperated list of benchmark suites to run. See apps/define-*.yml for " +\
+                        "the benchmark suite names.",
+                  default="rodinia_2.0-ft")
+    parser.add_option("-C", "--configs_list", dest="configs_list",
+                  help="a comma seperated list of configs to run. See configs/define-*.yml for " +\
+                        "the config names.",
+                  default="GTX480")
     parser.add_option("-p", "--benchmark_exec_prefix", dest="benchmark_exec_prefix",
                  help="When submitting the job to torque this string" +\
                  " is placed before the command line that runs the benchmark. " +\
@@ -97,9 +125,9 @@ def parse_run_simulations_options():
     
     (options, args) = parser.parse_args()
     # Parser seems to leave some whitespace on the options, getting rid of it
-    options.configs_file = options.configs_file.strip()
+    options.configs_list = options.configs_list.strip()
     options.benchmark_exec_prefix = options.benchmark_exec_prefix.strip()
-    options.benchmark_file = options.benchmark_file.strip()
+    options.benchmark_list = options.benchmark_list.strip()
     options.run_directory = options.run_directory.strip()
     options.so_dir = options.so_dir.strip()
     options.launch_name = options.launch_name.strip()

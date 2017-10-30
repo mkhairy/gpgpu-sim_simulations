@@ -3,7 +3,11 @@ ifeq ($(GPGPUSIM_BENCHMARKS_SETUP_ENVIRONMENT_WAS_RUN), 0)
 $(error You must run "source setup_environment before calling make")
 endif
 
-all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive 
+ifeq ($(CUDA_VERSION_MAJOR), 4)
+all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench sdk-4.2
+else
+all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench
+endif
 #  dragon-cdp 
 
 #Disable clean for now, It has a bug!
@@ -32,17 +36,31 @@ rodinia_2.0-ft: data
 	$(SETENV) make $(MAKE_ARGS) -C cuda/rodinia/2.0-ft/streamcluster
 
 ###################################################################################################3
+# Purdue microbenchmarks for added functionality
+###################################################################################################3
+microbench:
+	$(SETENV) make $(MAKE_ARGS) -C cuda/microbench cuda-$(CUDA_VERSION_MAJOR)
+
+###################################################################################################3
 # For Dragon, we need to change the archs manually!  (TO DO)
 # Naive works wwith only SM_20 and above
 # Fro Dragon-cdp comilation, you need to ensure that you are using at least CUDA 5.5
 ###################################################################################################3
 dragon-naive: data
 	chmod +x cuda/dragon_li/sconstruct
-	scons sm20=1 -C cuda/dragon_li
+	if [ ${CUDA_VERSION_MAJOR} -lt 8 ]; then \
+		scons sm20=1 -C cuda/dragon_li; \
+	else \
+		scons sm62=1 -C cuda/dragon_li; \
+	fi
 
 dragon-cdp: data
 	chmod +x cuda/dragon_li/sconstruct
 	scons cdp=1 -C cuda/dragon_li
+	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testAmr-cdp $(BINDIR)/$(BINSUBDIR)/
+	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testBfs-cdp $(BINDIR)/$(BINSUBDIR)/
+	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testJoin-cdp $(BINDIR)/$(BINSUBDIR)/
+	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testSssp-cdp $(BINDIR)/$(BINSUBDIR)/
 
 ###################################################################################################3
 #pagerank and bc does not work with SM_10 because they need atomic_add
@@ -67,14 +85,25 @@ pannotia: data
 #xsbench does not work with SM_10
 ###################################################################################################3
 
+
 proxy-apps: data
 	chmod +x cuda/proxy-apps-doe/cns/compile.bash
 	($(SETENV) cd cuda/proxy-apps-doe/cns/ ; ./compile.bash)
-	#chmod +x cuda/proxy-apps-doe/comd/cmd_compile.sh
-	#( cd cuda/proxy-apps-doe/comd ; ./cmd_compile.sh) 
+	if [ ${CUDA_VERSION_MAJOR} -gt 7 ] ; then  \
+		chmod +x cuda/proxy-apps-doe/comd/cmd_compile.sh;\
+		( cd cuda/proxy-apps-doe/comd ; ./cmd_compile.sh) ;\
+	fi
 	$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/lulesh
-	#$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/minife_matvec_ell
+	if [ ${CUDA_VERSION_MAJOR} -lt 7 ] ; then  \
+		$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/minife_matvec_ell;\
+	fi
 	$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/xsbench
+
+SDK_42_APPS=$(shell ls -p cuda/sdk/4.2/ | grep "/")
+$(SDK_42_APPS):
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/sdk/4.2/$@
+
+sdk-4.2: $(SDK_42_APPS)
 
 clean_rodinia_2.0-ft:
 	$(SETENV) make $(MAKE_ARGS) clean -C cuda/rodinia/2.0-ft/backprop

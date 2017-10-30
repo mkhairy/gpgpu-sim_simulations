@@ -65,7 +65,7 @@ class ConfigurationSpec:
                 self.setup_run_directory(full_run_dir, this_run_dir)
 
                 self.text_replace_torque_sim(full_run_dir,this_run_dir,benchmark,cuda_version, args, libdir, full_exec_dir)
-                self.append_gpgpusim_config(full_run_dir, this_run_dir, self.config_file)
+                self.append_gpgpusim_config(benchmark, this_run_dir, self.config_file)
                 
                 # Submit the job to torque and dump the output to a file
                 if not options.no_launch:
@@ -186,12 +186,13 @@ class ConfigurationSpec:
         open(this_run_dir + "torque.sim", 'w').write(torque_text)
 
     # replaces all the "REPLACE_*" strings in the gpgpusim.config file
-    def append_gpgpusim_config(self,full_bin_dir,this_run_dir, config_text_file):
-        benchmark_spec_opts_file = os.path.join( full_bin_dir, "benchmark_options.txt" )
+    def append_gpgpusim_config(self, bench_name, this_run_dir, config_text_file):
+        benchmark_spec_opts_file = os.path.join( this_directory, "..", "..", "benchmarks",
+            "app-specific-gpgpu-sim-options", bench_name, "benchmark_options.txt" )
         benchmark_spec_opts = ""
         if(os.path.isfile(benchmark_spec_opts_file)):
             f = open(benchmark_spec_opts_file)
-            benchmark_spec_opts_line_args = f.read().strip()
+            benchmark_spec_opts = f.read().strip()
             f.close()
 
         config_text = open(config_text_file).read()
@@ -228,13 +229,7 @@ if not os.path.exists( running_so_dir ):
     shutil.copy( so_path, running_so_dir )
 options.so_dir = running_so_dir
 
-options.benchmark_file = common.file_option_test(options.benchmark_file,
-    os.path.join( this_directory, "regression_recipies", "all", "benchmarks.yml"),
-    this_directory )
-options.configs_file = common.file_option_test(options.configs_file,
-    os.path.join( this_directory, "regression_recipies", "all", "configs.yml"),
-    this_directory )
-
+common.load_defined_yamls()
 
 # Test for the existance of torque on the system
 if not any([os.path.isfile(os.path.join(p, "qsub")) for p in os.getenv("PATH").split(os.pathsep)]):
@@ -243,16 +238,17 @@ if not any([os.path.isfile(os.path.join(p, "qsub")) for p in os.getenv("PATH").s
 if not any([os.path.isfile(os.path.join(p, "nvcc")) for p in os.getenv("PATH").split(os.pathsep)]):
     exit("ERROR - Cannot find nvcc PATH... Is CUDA_INSTALL_PATH/bin in the system PATH?")
 
-benchmarks = common.parse_app_yml( options.benchmark_file )
+benchmarks = []
+benchmarks = common.gen_apps_from_suite_list(options.benchmark_list.split(","))
 
-cfgs = common.parse_config_yml( options.configs_file )
+cfgs = common.gen_configs_from_list( options.configs_list.split(",") )
 configurations = []
 for config in cfgs:
     configurations.append( ConfigurationSpec( config ) )
 
 print("Running Simulations with GPGPU-Sim built from \n{0}\n ".format(version_string) +
-      "\nUsing configs_file " + options.configs_file +
-      "\nBenchmark File " + options.benchmark_file)
+      "\nUsing configs: " + options.configs_list +
+      "\nBenchmark: " + options.benchmark_list)
 
 for config in configurations:
     config.my_print()
