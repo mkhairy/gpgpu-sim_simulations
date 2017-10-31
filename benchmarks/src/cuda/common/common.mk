@@ -21,7 +21,7 @@
 .SUFFIXES : .cu .cu_dbg.o .c_dbg.o .cpp_dbg.o .cu_rel.o .c_rel.o .cpp_rel.o .cubin .ptx
 
 # Add new SM Versions here as devices with new Compute Capability are released
-SM_VERSIONS   := 10 11 12 13 20 21 30 50 60 62
+SM_VERSIONS   := 10 11 12 13 20 21 30 50 60 61 62
 
 CUDA_INSTALL_PATH ?= /home/tgrogers-raid/a/common/cuda-4.2
 
