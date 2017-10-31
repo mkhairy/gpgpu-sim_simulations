@@ -88,7 +88,7 @@ int main(int argc, char** argv)
     shrQAStart(argc, argv);
 
     printf("Vector Addition\n");
-    int N = 50000;
+    int N = 4000000;
     size_t size = N * sizeof(float);
     ParseArguments(argc, argv);
 

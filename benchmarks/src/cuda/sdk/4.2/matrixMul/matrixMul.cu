@@ -250,7 +250,7 @@ void runTest(int argc, char** argv)
 
     // Optional Command-line multiplier for matrix sizes
     unsigned int uiWA, uiHA, uiWB, uiHB, uiWC, uiHC;
-    int iSizeMultiple = 5;
+    int iSizeMultiple = 10;
     if (checkCmdLineFlag( argc, (const char **)argv, "sizemult" )) {
         iSizeMultiple = getCmdLineArgumentInt(argc, (const char**)argv, "sizemult"); 
     }

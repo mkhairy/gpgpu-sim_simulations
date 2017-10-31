@@ -172,7 +172,7 @@ int main(int argc, char **argv)
     uint  *d_Histogram;
     StopWatchInterface *hTimer;
     int PassFailFlag = 1;
-    uint byteCount = 64 * 1024; //64 * 1048576;
+    uint byteCount = 64 * 131072; //64 * 1048576;
     uint uiSizeMult = 1;
 
     cudaDeviceProp deviceProp;
