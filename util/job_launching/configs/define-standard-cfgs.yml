@@ -53,6 +53,10 @@ P100-HBM:
 TITANX-P102:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: ""
+    
+TITANX-P102-cdp:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: " -gpgpu_cdp_enabled 1 \n -gpgpu_max_concurrent_kernel 32 \n -gpgpu_local_mem_map 0 \n -gpgpu_concurrent_kernel_sm 1 \n -gpgpu_kernel_launch_latency 100 \n -cdp_latency 0,0,0,0,0 \n -gpgpu_deadlock_detect 1"
 
 P100-HBM-PTXPLUS:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM/gpgpusim.config"
