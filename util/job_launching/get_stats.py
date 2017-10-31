@@ -282,4 +282,3 @@ for appargs in apps_and_args:
 
 print_stat( "GPGPU-Sim-build", all_kernels )
 
-print csv_str
