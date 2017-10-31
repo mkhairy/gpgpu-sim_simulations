@@ -51,7 +51,7 @@ dragon-naive: data
 	if [ ${CUDA_VERSION_MAJOR} -lt 8 ]; then \
 		scons sm20=1 -C cuda/dragon_li; \
 	else \
-		scons sm62=1 -C cuda/dragon_li; \
+		scons sm61=1 -C cuda/dragon_li; \
 	fi
 
 dragon-cdp: data
