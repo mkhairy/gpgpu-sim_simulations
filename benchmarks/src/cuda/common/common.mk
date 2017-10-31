@@ -143,6 +143,7 @@ GENCODE_SM30 := -gencode=arch=compute_30,code=\"sm_30,compute_30\"
 GENCODE_SM35 := -gencode=arch=compute_35,code=\"sm_35,compute_35\"
 GENCODE_SM50 := -gencode=arch=compute_50,code=\"sm_50,compute_50\"
 GENCODE_SM60 := -gencode=arch=compute_60,code=\"sm_60,compute_60\"
+GENCODE_SM61 := -gencode=arch=compute_61,code=\"sm_61,compute_61\"
 GENCODE_SM62 := -gencode=arch=compute_62,code=\"sm_62,compute_62\"
 
 CXXFLAGS  += $(CXXWARN_FLAGS) $(CXX_ARCH_FLAGS)
@@ -413,11 +414,11 @@ $(OBJDIR)/%.cpp.o : $(SRCDIR)%.cpp $(C_DEPS)
 
 # Default arch includes gencode for sm_10, sm_20, sm_30, and other archs from GENCODE_ARCH declared in the makefile
 $(OBJDIR)/%.cu.o : $(SRCDIR)%.cu $(CU_DEPS)
-	$(VERBOSE)$(NVCC) $(GENCODE_SM10) $(GENCODE_SM13) $(GENCODE_ARCH) $(GENCODE_SM20) $(GENCODE_SM30) $(GENCODE_SM35) $(GENCODE_SM50) $(GENCODE_SM60) $(GENCODE_SM62) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -c $<
+	$(VERBOSE)$(NVCC) $(GENCODE_SM10) $(GENCODE_SM13) $(GENCODE_ARCH) $(GENCODE_SM20) $(GENCODE_SM30) $(GENCODE_SM35) $(GENCODE_SM50) $(GENCODE_SM60) $(GENCODE_SM61) $(GENCODE_SM62) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -c $<
 
 # Default arch includes gencode for sm_10, sm_20, sm_30, and other archs from GENCODE_ARCH declared in the makefile
 $(CUBINDIR)/%.cubin : $(SRCDIR)%.cu cubindirectory
-	$(VERBOSE)$(NVCC) $(GENCODE_SM10) $(GENCODE_SM13) $(GENCODE_ARCH) $(GENCODE_SM20) $(GENCODE_SM30) $(GENCODE_SM35) $(GENCODE_SM50) $(GENCODE_SM60) $(GENCODE_SM62) $(CUBIN_ARCH_FLAG) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -cubin $<
+	$(VERBOSE)$(NVCC) $(GENCODE_SM10) $(GENCODE_SM13) $(GENCODE_ARCH) $(GENCODE_SM20) $(GENCODE_SM30) $(GENCODE_SM35) $(GENCODE_SM50) $(GENCODE_SM60)  $(GENCODE_SM61) $(GENCODE_SM62) $(CUBIN_ARCH_FLAG) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -cubin $<
 
 $(PTXDIR)/%.ptx : $(SRCDIR)%.cu ptxdirectory
 	$(VERBOSE)$(NVCC) $(CUBIN_ARCH_FLAG) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -ptx $<
