@@ -108,7 +108,37 @@ microbench:
 
 
 ### Apps without FTs
-
+sdk-4.2-min:
+    exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
+    data_dirs: "../../benchmarks/data_dirs/cuda/sdk/4.2/"
+    execs:
+        - BlackScholes:
+            -
+        - convolutionSeparable:
+            -
+        - fastWalshTransform:
+            -
+        - histogram:
+            -
+        - mergeSort:
+            -
+        - reduction:
+            -
+        - scalarProd:
+            -
+        - sortingNetworks:
+            -
+        - transpose:
+            -
+        - vectorAdd:
+            -
+        - matrixMul:
+            -
+        - scan:
+            - 
+        - SobelFilter:
+            - 
+            
 # dragon-naive
 dragon-naive:
     exec_dir: "../../benchmarks/src/cuda/dragon_li/bin/$CUDA_VERSION/"
