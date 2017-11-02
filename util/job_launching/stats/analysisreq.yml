@@ -1,0 +1,18 @@
+# Collect contains the name of the stats you want to collect.
+# Under the name of the stat provide a regex, where the first group
+# Is the value you want printed.
+# If you don't know "how to regex".... Learn how :) It will change your life.
+# Here is a handy regex tester that helps get the thing right faster without re-running stuff:
+#   http://www.regexpal.com/
+
+collect:
+    - 'total_CMD\s*=\s*(.*)'
+    - 'n_nop\s*=\s*(.*)'
+    - 'Read\s*=\s*(.*)'
+    - 'Write\s*=\s*(.*)'
+    - 'L2_Alloc\s*=\s*(.*)'
+    - 'n_act\s*=\s*(.*)'
+    - 'n_pre\s*=\s*(.*)'
+    - 'n_req\s*=\s*(.*)'
+    - 'n_req4\s*=\s*(.*)'
+    - 'total_req\s*=\s*(.*)'

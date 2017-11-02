@@ -1,0 +1,23 @@
+# Collect contains the name of the stats you want to collect.
+# Under the name of the stat provide a regex, where the first group
+# Is the value you want printed.
+# If you don't know "how to regex".... Learn how :) It will change your life.
+# Here is a handy regex tester that helps get the thing right faster without re-running stuff:
+#   http://www.regexpal.com/
+
+collect:
+    - 'bwutil\s*=\s*(.*)'
+    - 'total_CMD\s*=\s*(.*)'
+    - 'util_bw\s*=\s*(.*)'
+    - 'Wasted_Col\s*=\s*(.*)'
+    - 'Wasted_Row\s*=\s*(.*)'
+    - 'Idle\s*=\s*(.*)'
+    - 'RCDc_limit\s*=\s*(.*)'
+    - 'RCDWRc_limit\s*=\s*(.*)'
+    - 'WTRc_limit\s*=\s*(.*)'
+    - 'RTWc_limit\s*=\s*(.*)'
+    - 'CCDLc_limit\s*=\s*(.*)'
+    - 'rwq\s*=\s*(.*)'
+    - 'CCDLc_limit_alone\s*=\s*(.*)'
+    - 'WTRc_limit_alone\s*=\s*(.*)'
+    - 'RTWc_limit_alone\s*=\s*(.*)'
