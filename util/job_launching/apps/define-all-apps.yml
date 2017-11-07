@@ -166,7 +166,7 @@ proxy-apps-doe1:
          - comd/CoMDCUDA:
             - p ag -e -x 20 -y 20 -z 20 -n 0 -m thread_atom
          - cns/cns_all:
-            - 64 32 32 1
+            - 256 128 128 1
 
 proxy-apps-doe2:
     exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
