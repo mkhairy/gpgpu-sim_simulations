@@ -1,0 +1,32 @@
+cd test0
+../Vector 4000000 256 | tee /dev/tty way0.txt
+cd ../
+cd test4
+../Vector 4000000 256 | tee /dev/tty way4.txt
+cd ../
+cd test8
+../Vector 4000000 256 | tee /dev/tty way8.txt
+cd ../
+cd test12
+../Vector 4000000 256 | tee /dev/tty way12.txt
+cd ../
+cd test2
+../Vector 4000000 256 | tee /dev/tty way2.txt
+cd ../
+cd test6
+../Vector 4000000 256 | tee /dev/tty way6.txt
+cd ../
+cd test8
+../Vector 4000000 256 | tee /dev/tty way8.txt
+cd ../
+cd test10
+../Vector 4000000 256 | tee /dev/tty way10.txt
+cd ../
+cd test14
+../Vector 4000000 256 | tee /dev/tty way14.txt
+cd ../
+cd test14
+../Vector 4000000 256 | tee /dev/tty way16.txt
+cd ../
+
+./Vector | tee /dev/tty Locality.txt

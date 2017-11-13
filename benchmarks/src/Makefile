@@ -3,7 +3,7 @@ ifeq ($(GPGPUSIM_BENCHMARKS_SETUP_ENVIRONMENT_WAS_RUN), 0)
 $(error You must run "source setup_environment before calling make")
 endif
 
-all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 sdk-4.2
+all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 sdk-4.2 others
 #  dragon-cdp 
 
 #Disable clean for now, It has a bug!
@@ -162,6 +162,41 @@ rodinia-3.1:
 	mv $(BINDIR)/$(BINSUBDIR)/needle $(BINDIR)/$(BINSUBDIR)/nw-rodinia-3.1
 	mv $(BINDIR)/$(BINSUBDIR)/streamcluster $(BINDIR)/$(BINSUBDIR)/streamcluster-rodinia-3.1
 	mv $(BINDIR)/mummergpu $(BINDIR)/$(BINSUBDIR)/mummergpu-rodinia-3.1
+
+others:
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/copy_kernel/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/copy_vector4_kernel/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/GUPS/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/irreguler/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/irreguler_copy/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/locality_2sectors/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/locality_2sectors_nocont/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/locality_cacheline/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/locality_sector/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/locality_sector_nocont/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/locality_sector_nocont_variable/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/MM/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/MM_optimzed/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/spmv/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/VecAdd/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/TRIAD/
+	mv cuda/other/copy_kernel/copy_kernel $(BINDIR)/$(BINSUBDIR)/copy_kernel
+	mv cuda/other/copy_vector4_kernel/copy_vector4_kernel $(BINDIR)/$(BINSUBDIR)/copy_vector4_kernel
+	mv cuda/other/GUPS/gups $(BINDIR)/$(BINSUBDIR)/gups
+	mv cuda/other/irreguler/irreguler $(BINDIR)/$(BINSUBDIR)/irreguler
+	mv cuda/other/irreguler_copy/irreguler_copy $(BINDIR)/$(BINSUBDIR)/irreguler_copy
+	mv cuda/other/locality_2sectors/locality_2sectors $(BINDIR)/$(BINSUBDIR)/locality_2sectors
+	mv cuda/other/locality_2sectors_nocont/locality_2sectors_nocont $(BINDIR)/$(BINSUBDIR)/locality_2sectors_nocont
+	mv cuda/other/locality_cacheline/locality_cacheline $(BINDIR)/$(BINSUBDIR)/locality_cacheline
+	mv cuda/other/locality_sector/locality_sector $(BINDIR)/$(BINSUBDIR)/locality_sector
+	mv cuda/other/locality_sector_nocont/locality_sector_nocont $(BINDIR)/$(BINSUBDIR)/locality_sector_nocont
+	mv cuda/other/locality_sector_nocont_variable/locality_sector_nocont_variable $(BINDIR)/$(BINSUBDIR)/locality_sector_nocont_variable
+	mv cuda/other/MM/MM $(BINDIR)/$(BINSUBDIR)/MM
+	mv cuda/other/MM/MM_optimzed $(BINDIR)/$(BINSUBDIR)/MM_optimzed
+	mv cuda/other/spmv/spmv $(BINDIR)/$(BINSUBDIR)/spmv
+	mv cuda/other/VecAdd/Vector $(BINDIR)/$(BINSUBDIR)/Vector
+	mv cuda/other/TRIAD/triad $(BINDIR)/$(BINSUBDIR)/triad
+
 
 clean_rodinia-3.1:
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C cuda/rodinia/3.1/cuda/backprop -f Makefile_nvidia

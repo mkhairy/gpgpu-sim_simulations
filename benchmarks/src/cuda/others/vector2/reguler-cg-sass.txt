@@ -1,0 +1,59 @@
+
+Fatbin elf code:
+================
+arch = sm_61
+code version = [1,7]
+producer = <unknown>
+host = linux
+compile_size = 64bit
+
+	code for sm_61
+
+Fatbin elf code:
+================
+arch = sm_61
+code version = [1,7]
+producer = cuda
+host = linux
+compile_size = 64bit
+
+	code for sm_61
+		Function : _Z6VecAddPKfS0_Pfi
+	.headerflags    @"EF_CUDA_SM61 EF_CUDA_PTX_SM(EF_CUDA_SM61)"
+                                                                                /* 0x001c7c00e22007f6 */
+        /*0008*/                   MOV R1, c[0x0][0x20];                        /* 0x4c98078000870001 */
+        /*0010*/                   S2R R0, SR_CTAID.X;                          /* 0xf0c8000002570000 */
+        /*0018*/                   S2R R2, SR_TID.X;                            /* 0xf0c8000002170002 */
+                                                                                /* 0x001fd840fec20ff1 */
+        /*0028*/                   XMAD.MRG R3, R0.reuse, c[0x0] [0x8].H1, RZ;  /* 0x4f107f8000270003 */
+        /*0030*/                   XMAD R2, R0.reuse, c[0x0] [0x8], R2;         /* 0x4e00010000270002 */
+        /*0038*/                   XMAD.PSL.CBCC R0, R0.H1, R3.H1, R2;          /* 0x5b30011800370000 */
+                                                                                /* 0x081fc400ffa007ed */
+        /*0048*/                   ISETP.GT.AND P0, PT, R0, 0x1f, PT;           /* 0x3669038001f70007 */
+        /*0050*/               @P0 EXIT;                                        /* 0xe30000000000000f */
+        /*0058*/                   SHL R4, R0.reuse, 0x2;                       /* 0x3848000000270004 */
+                                                                                /* 0x001fc840fec007f5 */
+        /*0068*/                   SHR R0, R0, 0x1e;                            /* 0x3829000001e70000 */
+        /*0070*/                   IADD R2.CC, R4.reuse, c[0x0][0x140];         /* 0x4c10800005070402 */
+        /*0078*/                   IADD.X R3, R0, c[0x0][0x144];                /* 0x4c10080005170003 */
+                                                                                /* 0x001fc800fcc00071 */
+        /*0088*/                   LDG.E.CG R2, [R2];                           /* 0xeed4600000070202 */
+        /*0090*/                   IADD R4.CC, R4, c[0x0][0x150];               /* 0x4c10800005470404 */
+        /*0098*/                   IADD.X R5, R0, c[0x0][0x154];                /* 0x4c10080005570005 */
+                                                                                /* 0x001ffc00ffe040f1 */
+        /*00a8*/                   STG.E [R4], R2;                              /* 0xeedc200000070402 */
+        /*00b0*/                   EXIT;                                        /* 0xe30000000007000f */
+        /*00b8*/                   BRA 0xb8;                                    /* 0xe2400fffff87000f */
+		...................................
+
+
+
+Fatbin ptx code:
+================
+arch = sm_61
+code version = [5,0]
+producer = cuda
+host = linux
+compile_size = 64bit
+compressed
+ptxasOptions = -dlcm=cg  

@@ -137,7 +137,44 @@ sdk-4.2-min:
             - 
         - SobelFilter:
             - 
-            
+
+others:
+    exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
+    data_dirs: "../../benchmarks/data_dirs/cuda/sdk/4.2/"
+    execs:
+        - copy_kernel:
+            - 2621440 256 6 1
+        - copy_vector4_kernel:
+            - 2621440 256 6 1
+        - gups:
+            -
+        - irreguler:
+            - 2621440 256 6 32
+        - irreguler_copy:
+            - 2621440 256 6 32
+        - locality_cacheline:
+            - 2621440 256 6 32
+        - locality_sector:
+            - 2621440 256 6 32
+        - locality_sector_nocont:
+            - 2621440 256 6 32
+        - locality_sector_nocont_variable:
+            - 2621440 256 6 32
+        - locality_2sectors:
+            - 2621440 256 6 32
+        - locality_2sectors_nocont:
+            - 2621440 256 6 32
+        - MM:
+            - 2048 2048 2048 2048 16 16
+        - MM_optimzed:
+            - 2048 2048 2048 2048 16 16
+        - spmv:
+            -
+        - Vector:
+            - 2621440 256 6 32
+        - triad:
+            - 2621440 256 6 32
+
 # dragon-naive
 dragon-naive:
     exec_dir: "../../benchmarks/src/cuda/dragon_li/bin/$CUDA_VERSION/"
