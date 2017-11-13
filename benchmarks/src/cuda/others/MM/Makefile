@@ -6,7 +6,7 @@ CC := $(CUDA_DIR)/bin/nvcc
 LIB := /usr/local/cuda/lib:../common/lib/
 
 INCLUDE := ../common/inc/:$(CUDA_DIR)/include
-LIB := ../common/lib/:$(CUDA_LIB_DIR) 
+LIB := ../common/lib/:$(CUDA_LIB_DIR) -lcudart
 
 LIBRARIES = cudart.lib cutil32.lib
 
