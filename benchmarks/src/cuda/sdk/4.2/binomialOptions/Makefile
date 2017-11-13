@@ -39,6 +39,7 @@ EXECUTABLE	:= binomialOptions
 # Cuda source files (compiled with cudacc) for different SM targets
 CUFILES	:= binomialOptions_SM13.cu
 
+
 # CUDA dependency files
 CU_DEPS		:= \
 	binomialOptions_kernel.cuh \

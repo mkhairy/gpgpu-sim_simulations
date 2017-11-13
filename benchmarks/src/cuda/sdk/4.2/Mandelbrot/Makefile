@@ -36,9 +36,12 @@
 # Add source files here
 EXECUTABLE	:= Mandelbrot
 # Cuda source files (compiled with cudacc)
-CUFILES_sm_11	:= Mandelbrot_sm11.cu
-CUFILES_sm_13   := Mandelbrot_sm13.cu
+#CUFILES_sm_11	:= Mandelbrot_sm11.cu
+#CUFILES_sm_13   := Mandelbrot_sm13.cu
+CUFILES   := Mandelbrot_sm13.cu Mandelbrot_sm11.cu
 CCFILES		:= Mandelbrot.cpp Mandelbrot_gold.cpp
+
+GENCODE_SM10 :=
 
 # Additional compiler flags and LIBs to include
 USEGLLIB         := 1

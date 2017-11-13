@@ -52,9 +52,19 @@ ROOTBINDIR ?= $(ROOTDIR)/../bin
 BINDIR     ?= $(ROOTBINDIR)/$(OSLOWER)
 ROOTOBJDIR ?= obj
 LIBDIR     := $(ROOTDIR)/../lib
-LIBDIRSDK     := $(NVIDIA_COMPUTE_SDK_LOCATION)/../4.2/C/lib
-COMMONDIR  := $(NVIDIA_COMPUTE_SDK_LOCATION)/../4.2/C/common
-SHAREDDIR  := $(NVIDIA_COMPUTE_SDK_LOCATION)/../4.2/shared
+
+ifeq ($(shell test ${CUDA_VERSION_MAJOR} -lt 5; echo $$?), 0)
+  LIBDIRSDK     := $(NVIDIA_COMPUTE_SDK_LOCATION)/C/lib
+  COMMONDIR  := $(NVIDIA_COMPUTE_SDK_LOCATION)/C/common
+  SHAREDDIR  := $(NVIDIA_COMPUTE_SDK_LOCATION)/shared
+else
+  LIBDIRSDK     ?= $(NVIDIA_COMPUTE_SDK_LOCATION)/lib
+  COMMONDIR  ?= $(NVIDIA_COMPUTE_SDK_LOCATION)/common
+  SHAREDDIR  ?= $(NVIDIA_COMPUTE_SDK_LOCATION)/shared
+  OMIT_CUTIL_LIB ?= 1
+  OMIT_SHRUTIL_LIB ?= 1
+endif
+
 
 # Compilers
 NVCC       := $(CUDA_INSTALL_PATH)/bin/nvcc 
@@ -145,6 +155,7 @@ GENCODE_SM50 := -gencode=arch=compute_50,code=\"sm_50,compute_50\"
 GENCODE_SM60 := -gencode=arch=compute_60,code=\"sm_60,compute_60\"
 GENCODE_SM61 := -gencode=arch=compute_61,code=\"sm_61,compute_61\"
 GENCODE_SM62 := -gencode=arch=compute_62,code=\"sm_62,compute_62\"
+
 
 CXXFLAGS  += $(CXXWARN_FLAGS) $(CXX_ARCH_FLAGS)
 CFLAGS    += $(CWARN_FLAGS) $(CXX_ARCH_FLAGS)

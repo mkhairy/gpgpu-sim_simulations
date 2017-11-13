@@ -25,8 +25,9 @@ rodinia_2.0-ft:
             - 30 6 40 ./data/result_30_6_40.txt
         - heartwall-rodinia-2.0-ft:
             - ./data/test.avi 1 ./data/result-1.txt
-        - kmeans-rodinia-2.0-ft:
-            - -i data/400.txt -g data/400-result.txt -o
+        # Uses legacy texture cache instructions, it is unclear if it still makes sense to support
+#        - kmeans-rodinia-2.0-ft:
+#            - -i data/400.txt -g data/400-result.txt -o
         - lud-rodinia-2.0-ft:
             - -v -b -i ./data/64.dat
         - nw-rodinia-2.0-ft:
@@ -81,8 +82,6 @@ sdk-4.2:
         - simpleAtomicIntrinsics:
             -
         - simpleP2P:
-            -
-        - simplePrintf:
             -
         - simpleTemplates:
             -
@@ -234,3 +233,66 @@ dragon-cdp:
             - -g ./data/coPapersDBLP.graph -f metis -e -v --cdp
         - testJoin-cdp:
             - -v -e --cdp -l 204800 -r 204800
+
+rodinia-3.1:
+    exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
+    data_dirs: "../../benchmarks/data_dirs/cuda/rodinia/3.1/"
+    execs:
+        - b+tree-rodinia-3.1:
+            - file ./data/mil.txt command ./data/command.txt
+        - backprop-rodinia-3.1:
+            - 65536
+        - bfs-rodinia-3.1:
+            - ./data/graph1MW_6.txt
+            - ./data/graph4096.txt
+            - ./data/graph65536.txt
+        - cfd-rodinia-3.1:
+            - ./data/fvcorr.domn.097K
+            - ./data/fvcorr.domn.193K
+            - ./data/missile.domn.0.2M
+        - dwt2d-rodinia-3.1:
+            - 192.bmp -d 192x192 -f -5 -l 3
+            - rgb.bmp -d 1024x1024 -f -5 -l 3
+        - gaussian-rodinia-3.1:
+            - -f ./data/matrix4.txt
+            - -s 16
+        - heartwall-rodinia-3.1:
+            - ./data/test.avi 20
+        - hotspot-rodinia-3.1:
+            - 512 2 2 ./data/temp_512 ./data/power_512 output.out
+        - hotspot3D-rodinia-3.1:
+            - 512 8 100 ./data/power_512x8 ./data/temp_512x8 output.out
+        # Only works with newer versions of CUDA
+#        - huffman-rodinia-3.1:
+#            - ./data/huffman/test1024_H2.206587175259.in
+        - hybridsort-rodinia-3.1:
+            - r
+        # Uses legacy texture cache instructions, it is unclear if it still makes sense to support
+#        - kmeans-rodinia-3.1:
+#            - -o -i ./data/kdd_cup
+        - lavaMD-rodinia-3.1:
+            - -boxes1d 10
+        - leukocyte-rodinia-3.1:
+            - ./data/testfile.avi 5
+        - lud-rodinia-3.1:
+            - -s 256 -v
+        - mummergpu-rodinia-3.1:
+            - ./data/NC_003997.fna ./data/NC_003997_q100bp.fna > NC_00399.out
+        - mycyocte-rodinia-3.1:
+            - 100 1 0
+        - nn-rodinia-3.1:
+            - ./data/filelist_4 -r 5 -lat 30 -lng 90
+        - nw-rodinia-3.1:
+            - 2048 10
+        - particlefilter_float-rodinia-3.1:
+            - -x 128 -y 128 -z 10 -np 1000
+        - particlefilter_naive-rodinia-3.1:
+            - -x 128 -y 128 -z 10 -np 1000
+        - pathfinder-rodinia-3.1:
+            - 100000 100 20 > result.txt
+        - srad_v1-rodinia-3.1:
+            - 100 0.5 502 458
+        - srad_v2-rodinia-3.1:
+            - 2048 2048 0 127 0 127 0.5 2
+        - streamcluster-rodinia-3.1:
+            - 10 20 256 65536 65536 1000 none output.txt 1
