@@ -112,7 +112,7 @@ void VectorAddition(int N, int threadsPerBlock, int compute, int scale)
     triad<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, scale);
 
 	checkCudaErrors(cudaDeviceSynchronize());
-	//}
+	}
 
 	double dSeconds = total_time/((double)TIMES * 1000);
 	double dNumOps = N;
