@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     uint *d_InputKey, *d_InputVal,    *d_OutputKey,    *d_OutputVal;
     uint hTimer;
 
-    const uint             N = 1024;
+    const uint             N = 1048576;
     const uint           DIR = 0;
     const uint     numValues = 65536;
     const uint numIterations = 1;

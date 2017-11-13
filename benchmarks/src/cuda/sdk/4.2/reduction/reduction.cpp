@@ -417,7 +417,7 @@ runTest( int argc, char** argv, ReduceType datatype)
 {
     //int size = 1<<24;    // number of elements to reduce
     //int size = 1<<17;    // number of elements to reduce
-    int size = 1<<16;    // number of elements to reduce
+    int size = 1<<22;    // number of elements to reduce
     int maxThreads = 256;  // number of threads per block
     int whichKernel = 6;
     int maxBlocks = 64;

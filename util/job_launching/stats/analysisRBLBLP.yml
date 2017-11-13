@@ -1,0 +1,17 @@
+# Collect contains the name of the stats you want to collect.
+# Under the name of the stat provide a regex, where the first group
+# Is the value you want printed.
+# If you don't know "how to regex".... Learn how :) It will change your life.
+# Here is a handy regex tester that helps get the thing right faster without re-running stuff:
+#   http://www.regexpal.com/
+
+collect:
+    - 'Row_Buffer_Locality\s*=\s*(.*)'
+    - 'Bank_Level_Parallism\s*=\s*(.*)'
+    - 'Bank_Level_Parallism_Col\s*=\s*(.*)'
+    - 'Bank_Level_Parallism_Ready\s*=\s*(.*)'
+    - 'write_to_read_ratio_blp_rw_average\s*=\s*(.*)'
+    - 'GrpLevelPara\s*=\s*(.*)'
+    - 'bwutil\s*=\s*(.*)'
+    - 'queue_avg\s*=\s*(.*)'
+    - 'average row locality\s*= \s*/\s* = \s*(.*)'

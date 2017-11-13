@@ -67,4 +67,4 @@ do
     FLAGS="$FLAGS -D$i"
 done
 
-nvcc -arch=sm_20 -Xptxas -v,-abi=no prototype_simple.cu $FLAGS -o cns_all -lcudart
+nvcc -gencode=arch=compute_20,code=\"sm_20,compute_20\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -Xptxas -v,-abi=no prototype_simple.cu $FLAGS -o cns_all -lcudart

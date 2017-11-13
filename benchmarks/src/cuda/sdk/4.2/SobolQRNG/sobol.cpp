@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
     bool ok = true;
 
     // We will generate n_vectors vectors of n_dimensions numbers
-    int n_vectors = 1000; //100000
+    int n_vectors = 100000; //100000
     int n_dimensions = 100;
 
     shrQAStart(argc, argv);

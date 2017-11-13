@@ -297,5 +297,3 @@ for appargs in apps_and_args:
 
 print_stat( "GPGPU-Sim-build", all_kernels )
 
-for stat_name in stats_yaml['collect']:
-    print_stat( stat_name, all_named_kernels )

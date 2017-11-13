@@ -46,21 +46,122 @@ PASCALTITANX-PTXPLUS:
     base_file: "$GPGPUSIM_ROOT/configs/PascalTitanX/gpgpu-sim-3.x/gpgpusim.config"
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 10"
 
+GTX480-fermi:
+    base_file: "$GPGPUSIM_ROOT/configs/GTX480/gpgpusim.config"
+    extra_params: "-gpgpu_ptx_force_max_capability 20"
+
 P100-HBM:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM/gpgpusim.config"
     extra_params: ""
+
+P100-HBM-dualdisable:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM/gpgpusim.config"
+    extra_params: "-dual_bus_interface 0"
 
 TITANX-P102:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: ""
 
+TITANX-P102-normalcache-naivewrite:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_cache:dl2 N:64:128:16,L:B:m:W:L,A:128:4,16:0,32 -gpgpu_cache:il1 N:8:128:4,L:R:f:N:L,A:2:48,4 -gpgpu_const_cache:l1 N:128:64:2,L:R:f:N:L,A:2:64,4"
+
+TITANX-P102-normalcache-fetchonwrite:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_cache:dl2 N:64:128:16,L:B:m:F:L,A:128:4,16:0,32 -gpgpu_cache:il1 N:8:128:4,L:R:f:N:L,A:2:48,4 -gpgpu_const_cache:l1 N:128:64:2,L:R:f:N:L,A:2:64,4"
+
+TITANX-P102-sectorcache-naivewrite:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_cache:dl2 S:64:128:16,L:B:m:W:L,A:128:4,16:0,32 -gpgpu_cache:il1 N:8:128:4,L:R:f:N:L,S:2:48,4 -gpgpu_const_cache:l1 N:128:64:2,L:R:f:N:L,S:2:64,4"
+
+TITANX-P102-elimenatetwtr:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-Elimnate_rw_turnaround 1"
+
+TITANX-P102-elimenatebgk:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_dram_timing_opt \"nbk=16:CCD=2:RRD=6:RCD=12:RAS=28:RP=12:RC=40:CL=12:WL=4:CDLR=5:WR=12:nbkgrp=1:CCDL=0:RTPL=0\""
+
+TITANX-P102-elimenateboth:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-Elimnate_rw_turnaround 1 -gpgpu_dram_timing_opt \"nbk=16:CCD=2:RRD=6:RCD=12:RAS=28:RP=12:RC=40:CL=12:WL=4:CDLR=5:WR=12:nbkgrp=1:CCDL=0:RTPL=0\""
+
+TITANX-P102-bankindexing:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-dram_bnk_indexing_policy 1 -dram_bnkgrp_indexing_policy 0"
+
+TITANX-P102-bankindexingboth:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-dram_bnk_indexing_policy 1 -dram_bnkgrp_indexing_policy 1"
+
+TITANX-P102-writebuffer64:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-Seperate_Write_Queue_Enable 1 -Write_Queue_Size 64:56:32"
+
+TITANX-P102-writebuffer:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-Seperate_Write_Queue_Enable 1 -Write_Queue_Size 128:116:64"
+
+TITANX-P102-memoptimall:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-Seperate_Write_Queue_Enable 1 -Write_Queue_Size 64:56:32 -dram_bnk_indexing_policy 1 -dram_bnkgrp_indexing_policy 1"
+
+TITANX-P102-flushl2:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_flush_l2_cache 1"
+
+TITANX-P102-dualbus:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-dual_bus_interface 1"
+
+TITANX-P102-latency150:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-dram_latency 150"
+
+TITANX-P102-latency200:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-dram_latency 200"
+
+TITANX-P102-latency50:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-dram_latency 50"
+
+TITANX-P102-latency0:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-dram_latency 0"
+
+TITANX-P102-2xBw:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_clock_domains 1417.0:2834.0:1417.0:5000.0"
+
+TITANX-P102-12Bw:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_clock_domains 1417.0:5668.0:2834.0:1250.0"
+
+TITANX-P102-fcfs:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_dram_scheduler 0"
+
+TITANX-P102-lrr:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_scheduler lrr"
+
+TITANX-P102-old:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_scheduler old"
+
+TITANX-P102-cdp:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: " -gpgpu_cdp_enabled 1 \n -gpgpu_max_concurrent_kernel 32 \n -gpgpu_local_mem_map 0 \n -gpgpu_concurrent_kernel_sm 1 \n -gpgpu_kernel_launch_latency 100 \n -cdp_latency 0,0,0,0,0 \n -gpgpu_deadlock_detect 1"
+
 P100-HBM-PTXPLUS:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM/gpgpusim.config"
-    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 10"
+    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 13"
 
 TITANX-P102-PTXPLUS:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
-    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 10"
+    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 13"
+
 
 PASCALTITANX-SM6:
     base_file: "$GPGPUSIM_ROOT/configs/PascalTitanX/gpgpu-sim-3.x/gpgpusim.config"
@@ -73,3 +174,4 @@ P100-HBM-SM6:
 TITANX-P102-SM6:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 62 -gpgpu_ptx_force_min_capability 60"
+>>>>>>> cc527e781bf987ffb1d42cbb97467a22033b0504

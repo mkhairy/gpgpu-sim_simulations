@@ -107,6 +107,73 @@ microbench:
 
 
 ### Apps without FTs
+sdk-4.2-min:
+    exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
+    data_dirs: "../../benchmarks/data_dirs/cuda/sdk/4.2/"
+    execs:
+        - BlackScholes:
+            -
+        - convolutionSeparable:
+            -
+        - fastWalshTransform:
+            -
+        - histogram:
+            -
+        - mergeSort:
+            -
+        - reduction:
+            -
+        - scalarProd:
+            -
+        - sortingNetworks:
+            -
+        - transpose:
+            -
+        - vectorAdd:
+            -
+        - matrixMul:
+            -
+        - scan:
+            - 
+        - SobelFilter:
+            - 
+
+others:
+    exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
+    data_dirs: "../../benchmarks/data_dirs/cuda/sdk/4.2/"
+    execs:
+        - copy_kernel:
+            - 2621440 256 6 1
+        - copy_vector4_kernel:
+            - 2621440 256 6 1
+        - gups:
+            - 23
+        - irreguler:
+            - 2621440 256 6 32
+        - irreguler_copy:
+            - 2621440 256 6 32
+        - locality_cacheline:
+            - 2621440 256 6 32
+        - locality_sector:
+            - 2621440 256 6 32
+        - locality_sector_nocont:
+            - 2621440 256 6 32
+        - locality_sector_nocont_variable:
+            - 2621440 256 6 32
+        - locality_2sectors:
+            - 2621440 256 6 32
+        - locality_2sectors_nocont:
+            - 2621440 256 6 32
+        - MM:
+            - 2048 2048 2048 2048 16 16
+        - MM_optimzed:
+            - 2048 2048 2048 2048 16 16
+        - spmv:
+            -
+        - Vector:
+            - 2621440 256 6 32
+        - triad:
+            - 2621440 256 6 32
 
 # dragon-naive
 dragon-naive:
@@ -135,7 +202,7 @@ proxy-apps-doe1:
          - comd/CoMDCUDA:
             - p ag -e -x 20 -y 20 -z 20 -n 0 -m thread_atom
          - cns/cns_all:
-            - 64 32 32 1
+            - 256 128 128 1
 
 proxy-apps-doe2:
     exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
@@ -144,6 +211,12 @@ proxy-apps-doe2:
          - XSBench:
             - 12 small 0
             - 12 large 0
+         - matvec:
+            - ./data/8x8x8.mtx 0
+            - ./data/32x32x32.mtx 0
+            - ./data/32x64x64.mtx 0
+            - ./data/64x64x64.mtx 0
+            - ./data/128x64x64.mtx 0
          - lulesh:
             -
 

@@ -3,7 +3,7 @@ ifeq ($(GPGPUSIM_BENCHMARKS_SETUP_ENVIRONMENT_WAS_RUN), 0)
 $(error You must run "source setup_environment before calling make")
 endif
 
-all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 sdk-4.2
+all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 sdk-4.2 others
 #  dragon-cdp 
 
 #Disable clean for now, It has a bug!
@@ -48,7 +48,7 @@ dragon-naive: data
 	if [ ${CUDA_VERSION_MAJOR} -lt 8 ]; then \
 		scons sm20=1 -C cuda/dragon_li; \
 	else \
-		scons sm62=1 -C cuda/dragon_li; \
+		scons sm61=1 -C cuda/dragon_li; \
 	fi
 
 dragon-cdp: data
@@ -86,8 +86,10 @@ pannotia: data
 proxy-apps: data
 	chmod +x cuda/proxy-apps-doe/cns/compile.bash
 	($(SETENV) cd cuda/proxy-apps-doe/cns/ ; ./compile.bash)
-	#chmod +x cuda/proxy-apps-doe/comd/cmd_compile.sh
-	#( cd cuda/proxy-apps-doe/comd ; ./cmd_compile.sh) 
+	if [ ${CUDA_VERSION_MAJOR} -gt 7 ] ; then  \
+		chmod +x cuda/proxy-apps-doe/comd/cmd_compile.sh;\
+		( cd cuda/proxy-apps-doe/comd ; ./cmd_compile.sh) ;\
+	fi
 	$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/lulesh
 	if [ ${CUDA_VERSION_MAJOR} -lt 7 ] ; then  \
 		$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/minife_matvec_ell;\
@@ -160,6 +162,41 @@ rodinia-3.1:
 	mv $(BINDIR)/$(BINSUBDIR)/needle $(BINDIR)/$(BINSUBDIR)/nw-rodinia-3.1
 	mv $(BINDIR)/$(BINSUBDIR)/streamcluster $(BINDIR)/$(BINSUBDIR)/streamcluster-rodinia-3.1
 	mv $(BINDIR)/mummergpu $(BINDIR)/$(BINSUBDIR)/mummergpu-rodinia-3.1
+
+others:
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/copy_kernel/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/copy_vector4_kernel/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/GUPS/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/irreguler/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/irreguler_copy/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/locality_2sectors/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/locality_2sectors_nocont/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/locality_cacheline/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/locality_sector/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/locality_sector_nocont/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/locality_sector_nocont_variable/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/MM/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/MM_optimzed/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/spmv/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/VecAdd/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/TRIAD/
+	mv cuda/others/copy_kernel/copy_kernel $(BINDIR)/$(BINSUBDIR)/copy_kernel
+	mv cuda/others/copy_vector4_kernel/copy_vector4_kernel $(BINDIR)/$(BINSUBDIR)/copy_vector4_kernel
+	#mv cuda/others/GUPS/gups $(BINDIR)/$(BINSUBDIR)/gups
+	mv cuda/others/irreguler/irreguler $(BINDIR)/$(BINSUBDIR)/irreguler
+	mv cuda/others/irreguler_copy/irreguler_copy $(BINDIR)/$(BINSUBDIR)/irreguler_copy
+	mv cuda/others/locality_2sectors/locality_2sectors $(BINDIR)/$(BINSUBDIR)/locality_2sectors
+	mv cuda/others/locality_2sectors_nocont/locality_2sectors_nocont $(BINDIR)/$(BINSUBDIR)/locality_2sectors_nocont
+	mv cuda/others/locality_cacheline/locality_cacheline $(BINDIR)/$(BINSUBDIR)/locality_cacheline
+	mv cuda/others/locality_sector/locality_sector $(BINDIR)/$(BINSUBDIR)/locality_sector
+	mv cuda/others/locality_sector_nocont/locality_sector_nocont $(BINDIR)/$(BINSUBDIR)/locality_sector_nocont
+	mv cuda/others/locality_sector_nocont_variable/locality_sector_nocont_variable $(BINDIR)/$(BINSUBDIR)/locality_sector_nocont_variable
+	mv cuda/others/MM/MM $(BINDIR)/$(BINSUBDIR)/MM
+	mv cuda/others/MM_optimzed/MM_optimzed $(BINDIR)/$(BINSUBDIR)/MM_optimzed
+	mv cuda/others/spmv/spmv $(BINDIR)/$(BINSUBDIR)/spmv
+	mv cuda/others/VecAdd/Vector $(BINDIR)/$(BINSUBDIR)/Vector
+	mv cuda/others/TRIAD/triad $(BINDIR)/$(BINSUBDIR)/triad
+
 
 clean_rodinia-3.1:
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C cuda/rodinia/3.1/cuda/backprop -f Makefile_nvidia
