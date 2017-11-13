@@ -36,13 +36,7 @@
 # Add source files here
 EXECUTABLE	:= gups
 # Cuda source files (compiled with cudacc)
-CUFILES		:= CudaRandomAccess.cu
-# CUDA dependency files
-CU_DEPS		:= CudaRandomAccess.h
-# C/C++ source files (compiled with gcc / c++)
-CCFILES		:= 
-
-GPGPUSIM_ROOT  ?= ../../..
+CUFILES		:= randomaccess.cu 
 
 ################################################################################
 # Rules and targets
