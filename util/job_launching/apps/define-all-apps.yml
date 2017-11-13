@@ -147,7 +147,7 @@ others:
         - copy_vector4_kernel:
             - 2621440 256 6 1
         - gups:
-            -
+            - 23
         - irreguler:
             - 2621440 256 6 32
         - irreguler_copy:
