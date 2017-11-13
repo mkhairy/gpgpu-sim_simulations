@@ -182,7 +182,7 @@ others:
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/other/TRIAD/
 	mv cuda/other/copy_kernel/copy_kernel $(BINDIR)/$(BINSUBDIR)/copy_kernel
 	mv cuda/other/copy_vector4_kernel/copy_vector4_kernel $(BINDIR)/$(BINSUBDIR)/copy_vector4_kernel
-	mv cuda/other/GUPS/gups $(BINDIR)/$(BINSUBDIR)/gups
+	#mv cuda/other/GUPS/gups $(BINDIR)/$(BINSUBDIR)/gups
 	mv cuda/other/irreguler/irreguler $(BINDIR)/$(BINSUBDIR)/irreguler
 	mv cuda/other/irreguler_copy/irreguler_copy $(BINDIR)/$(BINSUBDIR)/irreguler_copy
 	mv cuda/other/locality_2sectors/locality_2sectors $(BINDIR)/$(BINSUBDIR)/locality_2sectors
@@ -192,7 +192,7 @@ others:
 	mv cuda/other/locality_sector_nocont/locality_sector_nocont $(BINDIR)/$(BINSUBDIR)/locality_sector_nocont
 	mv cuda/other/locality_sector_nocont_variable/locality_sector_nocont_variable $(BINDIR)/$(BINSUBDIR)/locality_sector_nocont_variable
 	mv cuda/other/MM/MM $(BINDIR)/$(BINSUBDIR)/MM
-	mv cuda/other/MM/MM_optimzed $(BINDIR)/$(BINSUBDIR)/MM_optimzed
+	mv cuda/other/MM_optimzed/MM_optimzed $(BINDIR)/$(BINSUBDIR)/MM_optimzed
 	mv cuda/other/spmv/spmv $(BINDIR)/$(BINSUBDIR)/spmv
 	mv cuda/other/VecAdd/Vector $(BINDIR)/$(BINSUBDIR)/Vector
 	mv cuda/other/TRIAD/triad $(BINDIR)/$(BINSUBDIR)/triad
