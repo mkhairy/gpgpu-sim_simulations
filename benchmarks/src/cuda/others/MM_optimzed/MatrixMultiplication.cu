@@ -52,7 +52,7 @@ inline void __getLastCudaError(const char *errorMessage, const char *file, const
 #define TILEWIDTH_Y 16
 #define TILE_WIDTH 16
 
-__global__ void matrixMultiply(float* d_M, float* d_N, float* d_P,
+__global__ void matrixMultiply_optmized(float* d_M, float* d_N, float* d_P,
 			        int Width) {
 	 __shared__ float ds_M[TILE_WIDTH][TILE_WIDTH];
 	 __shared__ float ds_N[TILE_WIDTH][TILE_WIDTH];
