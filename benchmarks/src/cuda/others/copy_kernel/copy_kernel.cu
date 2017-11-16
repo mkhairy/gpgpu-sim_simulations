@@ -109,7 +109,7 @@ void VectorAddition(int N, int threadsPerBlock, int compute, int scale)
 	int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
 	for (int i = 0; i < 1; i++) {
 
-   copy_kernel<<<448, 128>>>(d_C, d_B, d_A, N);
+   copy_kernel<<<blocksPerGrid, threadsPerBlock>>>(d_C, d_B, d_A, N);
 
     getLastCudaError("kernel launch failure");
 	checkCudaErrors(cudaDeviceSynchronize());
