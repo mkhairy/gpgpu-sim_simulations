@@ -231,6 +231,22 @@ void csrTest(floatType* h_val,
 }
 
 template <typename floatType>
+void spmvCpu(const floatType *val, const int *cols, const int *rowDelimiters, 
+	     const floatType *vec, int dim, floatType *out) 
+{
+    for (int i=0; i<dim; i++) 
+    {
+        floatType t = 0; 
+        for (int j = rowDelimiters[i]; j < rowDelimiters[i + 1]; j++)
+        {
+            int col = cols[j]; 
+            t += val[j] * vec[col];
+        }    
+        out[i] = t; 
+    }
+}
+
+template <typename floatType>
 void RunTest(int nRows=0) 
 {
     // Host data structures
@@ -261,6 +277,8 @@ void RunTest(int nRows=0)
     refOut = new floatType[numRows];
     fill(h_vec, numRows, 10);
 
+    spmvCpu(h_val, h_cols, h_rowDelimiters, h_vec, numRows, refOut);
+	
     // Test CSR kernels on normal data
     cout << "CSR Test\n";
     csrTest<floatType>(h_val, h_cols,
