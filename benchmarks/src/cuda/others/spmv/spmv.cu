@@ -230,21 +230,6 @@ void csrTest(floatType* h_val,
       cudaEventDestroy(stop);
 }
 
-template <typename floatType>
-void spmvCpu(const floatType *val, const int *cols, const int *rowDelimiters, 
-	     const floatType *vec, int dim, floatType *out) 
-{
-    for (int i=0; i<dim; i++) 
-    {
-        floatType t = 0; 
-        for (int j = rowDelimiters[i]; j < rowDelimiters[i + 1]; j++)
-        {
-            int col = cols[j]; 
-            t += val[j] * vec[col];
-        }    
-        out[i] = t; 
-    }
-}
 
 template <typename floatType>
 void RunTest(int nRows=0) 

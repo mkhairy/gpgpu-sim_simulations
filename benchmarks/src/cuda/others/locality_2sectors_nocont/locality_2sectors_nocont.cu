@@ -123,7 +123,7 @@ void VectorAddition(int N, int threadsPerBlock, int compute, int scale)
 	for (int i = 0; i < 1; i++) {
 
 
-     locality_2sectors<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, N);
+     locality_2sectors_nocont<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, N);
 
     //getLastCudaError("kernel launch failure");
 	checkCudaErrors(cudaDeviceSynchronize());
