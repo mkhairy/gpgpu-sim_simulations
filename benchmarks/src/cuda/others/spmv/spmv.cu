@@ -278,11 +278,11 @@ void RunTest(int nRows=0)
     cudaFreeHost(h_out);   
 }
 
-int main()
+int main(int argc,char *argv[])
 {
    
     int probSizes[5] = {1024, 8192, 12288, 16384,32768};
-    int sizeClass = 32768;
+    int sizeClass = 12288;
 
     cout <<"Single precision tests:\n";
     RunTest<float>(sizeClass);
