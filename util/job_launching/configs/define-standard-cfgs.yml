@@ -62,7 +62,6 @@ TITANX-P102:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: ""
 
-<<<<<<< HEAD
 TITANX-P102-normalcache-naivewrite:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: "-gpgpu_cache:dl2 N:64:128:16,L:B:m:W:L,A:128:4,16:0,32 -gpgpu_cache:il1 N:8:128:4,L:R:f:N:L,A:2:48,4 -gpgpu_const_cache:l1 N:128:64:2,L:R:f:N:L,A:2:64,4"
@@ -179,3 +178,19 @@ P100-HBM-SM6:
 TITANX-P102-SM6:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 62 -gpgpu_ptx_force_min_capability 60"
+
+P100-MCM-1xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/1xBW/gpgpusim.config"
+    extra_params: ""
+
+P100-MCM-2xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/2xBW/gpgpusim.config"
+    extra_params: ""
+
+P100-MCM-4xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/4xBW/gpgpusim.config"
+    extra_params: ""
+
+P100-MCM-8xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/8xBW/gpgpusim.config"
+    extra_params: ""
