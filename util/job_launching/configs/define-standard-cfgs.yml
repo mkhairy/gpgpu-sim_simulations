@@ -179,6 +179,10 @@ TITANX-P102-SM6:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 62 -gpgpu_ptx_force_min_capability 60"
 
+P100-MCM-baseline:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/Baseline/gpgpusim.config"
+    extra_params: ""
+    
 P100-MCM-1xBW:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/1xBW/gpgpusim.config"
     extra_params: ""
