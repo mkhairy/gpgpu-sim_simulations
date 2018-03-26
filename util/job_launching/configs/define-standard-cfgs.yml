@@ -194,3 +194,55 @@ P100-MCM-4xBW:
 P100-MCM-8xBW:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/8xBW/gpgpusim.config"
     extra_params: ""
+
+P100-MCM-1xBW-cons:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: ""
+
+P100-MCM-2xBW-cons:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/2xBW/gpgpusim.config"
+    extra_params: ""
+
+P100-MCM-4xBW-cons:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/4xBW/gpgpusim.config"
+    extra_params: ""
+
+P100-MCM-8xBW-cons:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/8xBW/gpgpusim.config"
+    extra_params:
+
+P100-MCM-1xBW-ft-policy:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 0 -mcm_cta_sched_grain 1"
+
+P100-MCM-1xBW-sched-policy:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 0 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 16"
+
+P100-MCM-1xBW-optim-1:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 1"
+
+P100-MCM-1xBW-optim-2:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 2"
+
+P100-MCM-1xBW-optim-4:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 4"
+
+P100-MCM-1xBW-optim-8:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 8"
+
+P100-MCM-1xBW-optim-16:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 16"
+
+P100-MCM-1xBW-optim-32:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 32"
+
+P100-MCM-1xBW-optim-64:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_Parition/1xBW/gpgpusim.config"
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 64"

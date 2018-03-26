@@ -25,3 +25,6 @@ collect:
     - 'L2_WB\s*=\s*(.*)'
     - 'bwutil\s*=\s*(.*)'
     - 'gpgpu_simulation_time\s*=.*\(([0-9]+) sec\).*'
+    - 'on_chip_reqs\s*=\s*(.*)'
+    - 'off_chip_reqs\s*=\s*(.*)'
+
