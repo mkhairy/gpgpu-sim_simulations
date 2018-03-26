@@ -196,7 +196,7 @@ P100-MCM-8xBW:
     extra_params: ""
 
 P100-MCM-1xBW-cons:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition1xBW/gpgpusim.config"
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
     extra_params: ""
 
 P100-MCM-2xBW-cons:
