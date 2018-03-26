@@ -182,11 +182,11 @@ TITANX-P102-SM6:
 P100-MCM-baseline:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/Baseline/gpgpusim.config"
     extra_params: ""
-    
+
 P100-MCM-xbar:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/xbar/gpgpusim.config"
     extra_params: ""
-    
+
 P100-MCM-1xBW:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/1xBW/gpgpusim.config"
     extra_params: ""
