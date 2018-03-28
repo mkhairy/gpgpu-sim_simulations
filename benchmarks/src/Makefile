@@ -49,7 +49,7 @@ microbench:
 ###################################################################################################3
 dragon-naive: 
 	chmod +x cuda/dragon_li/sconstruct
-	if [ ${CUDA_VERSION_MAJOR} -lt 8 ]; then \
+	if [ ${CUDA_VERSION_MAJOR} -lt 5 ]; then \
 		scons sm20=1 -C cuda/dragon_li; \
 	else \
 		scons sm61=1 -C cuda/dragon_li; \
@@ -57,7 +57,11 @@ dragon-naive:
 
 dragon-cdp: dragon-naive
 	chmod +x cuda/dragon_li/sconstruct
-	scons cdp=1 -C cuda/dragon_li
+	if [ ${CUDA_VERSION_MAJOR} -lt 5 ]; then \
+		scons cdp=1 sm20=1 -C cuda/dragon_li; \
+	else \
+		scons cdp=1 sm61=1 -C cuda/dragon_li; \
+	fi
 	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testAmr-cdp $(BINDIR)/$(BINSUBDIR)/
 	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testBfs-cdp $(BINDIR)/$(BINSUBDIR)/
 	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testJoin-cdp $(BINDIR)/$(BINSUBDIR)/
