@@ -60,25 +60,25 @@ sdk-4.2:
 #            -
         - SobolQRNG:
             -
-        - alignedTypes:
-            -
-        - asyncAPI:
-            -
+#        - alignedTypes:
+#            -
+#        - asyncAPI:
+#            -
         - bandwidthTest:
             -
         # complex compile flow makes 2 versions of the same kernel in
         # CUDA 9.1 - screws up parser. Not worth continued support.
 #        - binomialOptions:
 #            -
-        - clock:
-            -
+#        - clock:
+#            -
         - convolutionSeparable:
             -
         # Texture ops - question on if support makes sense.
 #        - convolutionTexture:
 #            -
-        - cppIntegration:
-            -
+#        - cppIntegration:
+#            -
         - fastWalshTransform:
             -
         - histogram:
@@ -95,14 +95,14 @@ sdk-4.2:
             -
         - simpleAtomicIntrinsics:
             -
-        - simpleP2P:
-            -
-        - simpleTemplates:
-            -
-        - simpleVoteIntrinsics:
-            -
-        - simpleZeroCopy:
-            -
+#        - simpleP2P:
+#            -
+#        - simpleTemplates:
+#            -
+#        - simpleVoteIntrinsics:
+#            -
+#        - simpleZeroCopy:
+#            -
         - sortingNetworks:
             -
 #        - template:
