@@ -201,16 +201,10 @@ def parse_hw_csv(csv_file, hw_data, appargs, logger):
             hw_data[cfg] = {}
         hw_data[cfg][appargs] = kdata
 
+# Our big correlations are blowing up the csv package :)
+csv.field_size_limit(sys.maxsize)
 parser = OptionParser()
 parser = OptionParser()
-parser.add_option("-B", "--benchmark_list", dest="benchmark_list",
-                  help="a comma seperated list of benchmark suites to run. See apps/define-*.yml for " +\
-                        "the benchmark suite names.",
-                  default="rodinia_2.0-ft")
-parser.add_option("-C", "--configs_list", dest="configs_list",
-                  help="a comma seperated list of configs to run. See configs/define-*.yml for " +\
-                        "the config names.",
-                  default="TITANX-P102")
 parser.add_option("-H", "--hardware_dir", dest="hardware_dir",
                   help="The hardware stats directories",
                   default="")
@@ -227,7 +221,6 @@ parser.add_option("-v", "--verbose", dest="verbose",
 common.load_defined_yamls()
 
 benchmarks = []
-benchmarks = common.gen_apps_from_suite_list(options.benchmark_list.split(","))
 options.hardware_dir = common.dir_option_test( options.hardware_dir, "../../run_hw/", this_directory )
 options.data_mappings = common.file_option_test( options.data_mappings, "correl_mappings.py", this_directory )
 
@@ -289,8 +282,9 @@ for cfg,sim_for_cfg in sim_data.iteritems():
             if appargs in hw_data[hw_cfg]:
                 hw_klist = hw_data[hw_cfg][appargs]
                 processAnyKernels = False
-                if len(hw_klist) == len(sim_klist):
-                    logger.log("Found hw/sim match for {0}".format(appargs))
+                if len(sim_klist) >= len(hw_klist):
+                    logger.log("Found hw/sim match for {0}. Sim={1}. HW={2}"
+                        .format(appargs, len(sim_klist), len(hw_klist)))
                     sim_appargs_leftover.remove(appargs)
                     hw_appargs_leftover.remove(appargs)
                     count = 0
@@ -328,7 +322,7 @@ for cfg,sim_for_cfg in sim_data.iteritems():
                             max_axis_val = sim_array[-1]
 
                 else:
-                    logger.log("For appargs={0}, HW/SW kernels do not match HW={1}, SIM={2}\n"\
+                    logger.log("For appargs={0}, HW/SW kernels do not match HW={1}, SIM={2} and software has more than hardware\n"\
                         .format(appargs, len(hw_klist), len(sim_klist)))
                 if processAnyKernels:
                     appcount += 1
@@ -373,7 +367,10 @@ for hw_cfg, traces in fig_data.iteritems():
     print "Plotting HW cfg:{0}".format(hw_cfg)
     data = []
     markers =[dict(size = 10, color = 'rgba(152, 0, 0, .8)', line = dict(width = 2,color = 'rgb(0, 0, 0)')),
-              dict(size = 10,color = 'rgba(255, 182, 193, .9)',line = dict(width = 2,))]
+              dict(size = 10,color = 'rgba(255, 182, 193, .9)',line = dict(width = 2,)),
+              dict(size = 10,color = 'rgba(0, 182, 0, .9)',line = dict(width = 2,)),
+              dict(size = 10,color = 'rgba(0, 0, 193, .9)',line = dict(width = 2,)),
+              dict(size = 10,color = 'rgba(155, 155, 155, .9)',line = dict(width = 2,))]
     count = 0
     annotations = []
     agg_cfg = ""

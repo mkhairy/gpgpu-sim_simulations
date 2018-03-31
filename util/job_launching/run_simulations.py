@@ -93,7 +93,12 @@ class ConfigurationSpec:
                     if len(torque_out) > 0:
                         # Dump the benchmark description to the logfile
                         if not os.path.exists(this_directory + "logfiles/"):
-                            os.makedirs(this_directory + "logfiles/")
+                            # In the very rare case that concurrent builds try to make the directory at the same time
+                            # (after the test to os.path.exists -- this has actually happened...)
+                            try:
+                                os.makedirs(this_directory + "logfiles/")
+                            except:
+                                pass
                         now_time = datetime.datetime.now()
                         day_string = now_time.strftime("%y.%m.%d-%A")
                         time_string = now_time.strftime("%H:%M:%S")
@@ -226,7 +231,12 @@ so_path = os.path.join( options.so_dir, "libcudart.so" )
 version_string = extract_so_name( so_path )
 running_so_dir = os.path.join( options.run_directory, "gpgpu-sim-builds", version_string )
 if not os.path.exists( running_so_dir ):
-    os.makedirs( running_so_dir )
+    # In the very rare case that concurrent builds try to make the directory at the same time
+    # (after the test to os.path.exists -- this has actually happened...)
+    try:
+        os.makedirs( running_so_dir )
+    except:
+        pass
     shutil.copy( so_path, running_so_dir )
 options.so_dir = running_so_dir
 
