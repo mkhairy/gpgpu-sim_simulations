@@ -4,9 +4,9 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_4), 1)
-all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 sdk-4.2 ispass-2009 dragon-cdp lonestargpu-2.0
+all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 dragon-cdp lonestargpu-2.0
 else
-all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 sdk-4.2 ispass-2009
+all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1
 endif
 
 #Disable clean for now, It has a bug!
@@ -58,9 +58,9 @@ dragon-naive:
 dragon-cdp: dragon-naive
 	chmod +x cuda/dragon_li/sconstruct
 	if [ ${CUDA_VERSION_MAJOR} -lt 5 ]; then \
-		scons cdp=1 sm20=1 -C cuda/dragon_li; \
+		scons cdp=1 sm20=1 no_debug=1 -C cuda/dragon_li; \
 	else \
-		scons cdp=1 sm61=1 -C cuda/dragon_li; \
+		scons cdp=1 sm61=1 no_debug=1 -C cuda/dragon_li; \
 	fi
 	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testAmr-cdp $(BINDIR)/$(BINSUBDIR)/
 	cp ./cuda/dragon_li/cdp_bin/$(CUDA_VERSION)/testBfs-cdp $(BINDIR)/$(BINSUBDIR)/
@@ -94,17 +94,17 @@ pannotia:
 proxy-apps:
 	chmod +x cuda/proxy-apps-doe/cns/compile.bash
 	($(SETENV) cd cuda/proxy-apps-doe/cns/ ; ./compile.bash)
-	if [ ${CUDA_VERSION_MAJOR} -gt 7 ] ; then  \
-		chmod +x cuda/proxy-apps-doe/comd/cmd_compile.sh;\
-		( cd cuda/proxy-apps-doe/comd ; ./cmd_compile.sh) ;\
-	fi
+	#if [ ${CUDA_VERSION_MAJOR} -gt 7 ] ; then  \
+		#chmod +x cuda/proxy-apps-doe/comd/cmd_compile.sh;\
+		#( cd cuda/proxy-apps-doe/comd ; ./cmd_compile.sh) ;\
+	#fi
 	$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/lulesh
 	if [ ${CUDA_VERSION_MAJOR} -lt 7 ] ; then  \
 		$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/minife_matvec_ell;\
 	fi
 	$(SETENV) make $(MAKE_ARGS) -C cuda/proxy-apps-doe/xsbench
 
-SDK_42_APPS=$(shell ls -p cuda/sdk/4.2/ | grep "/")
+SDK_42_APPS= BlackScholes SobolQRNG alignedTypes bandwidthTest clock convolutionSeparable cppIntegration fastWalshTransform histogram mergeSort reduction scalarProd simpleAtomicIntrinsics simpleP2P simpleTemplates simpleVoteIntrinsics simpleZeroCopy sortingNetworks transpose vectorAdd
 $(SDK_42_APPS):
 	$(SETENV) export LIBDIRSDK=$(NVIDIA_COMPUTE_SDK_LOCATION)/../4.2/C/lib; export COMMONDIR=$(NVIDIA_COMPUTE_SDK_LOCATION)/../4.2/C/common; export SHAREDDIR=$(NVIDIA_COMPUTE_SDK_LOCATION)/../4.2/shared; export OMIT_CUTIL_LIB=0; export OMIT_SHRUTIL_LIB=0; make $(MAKE_ARGS) noinline=$(noinline) -C cuda/sdk/4.2/$@
 
