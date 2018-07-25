@@ -64,7 +64,7 @@ env.Append(BUILDERS = {
 	src_suffix = '.cu'
 ),
 'Cuda_61' : Builder(
-	action = actionCommon + ' -arch=sm_61 ',
+	action = actionCommon + ' -arch=sm_60 ',
 	src_suffix = '.cu'
 ),
 'Cuda_35' : Builder(
@@ -72,7 +72,7 @@ env.Append(BUILDERS = {
 	src_suffix = '.cu'
 ),
 'Cuda_61_CDP' : Builder(
-	action = actionCommon + ' -arch=sm_61 -rdc=true -lcudadevrt ',
+	action = actionCommon + ' -arch=sm_60 -rdc=true -lcudadevrt ',
 	src_suffix = '.cu'
 ),
 'Cuda_35_CDP' : Builder(

@@ -17,6 +17,38 @@ GTX750Ti:
 GTX1080Ti:
     base_file: "$GPGPUSIM_ROOT/configs/GeForceGTX1080Ti/gpgpusim.config"
 
+PASCALTITANX-1B:
+    base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX/gpgpu-sim-3.x/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 500000000 -gpgpu_frfcfs_dram_sched_queue_size 16"
+
+PASCALTITANX-fcfs-1B:
+    base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX/gpgpu-sim-3.x/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 500000000 -gpgpu_dram_scheduler 0 -gpgpu_frfcfs_dram_sched_queue_size 16"
+
+PASCALTITANX-1B-L1-OFF:
+    base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX/gpgpu-sim-3.x/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 500000000 "
+
+PASCALTITANX-1B-L1-ON:
+    base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX/gpgpu-sim-3.x/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 500000000 -gmem_skip_L1D 0"
+
+PASCALTITANX-2cores-1B-L1-OFF:
+    base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX-2cores/gpgpu-sim-3.x/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 200000000 "
+
+PASCALTITANX-2cores-1B-L1-ON:
+    base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX-2cores/gpgpu-sim-3.x/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 200000000 -gmem_skip_L1D 0"
+
+PASCALTITANX-4cores-1B-L1-OFF:
+    base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX-4cores/gpgpu-sim-3.x/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 200000000 "
+
+PASCALTITANX-4cores-1B-L1-ON:
+    base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX-4cores/gpgpu-sim-3.x/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 200000000 -gmem_skip_L1D 0"
+
 3.x_PASCALTITANX:
     base_file: "$GPGPUSIM_ROOT/configs/PascalTitanX/gpgpu-sim-3.x/gpgpusim.config"
 
@@ -33,6 +65,10 @@ P100-HBM-dualdisable:
 
 TITANX_P102:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+
+TITANX-P102-1B:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
 
 TITANX-P102-normalcache-naivewrite:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
@@ -114,6 +150,34 @@ TITANX-P102-fcfs:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: "-gpgpu_dram_scheduler 0"
 
+TITANX-P102-fcfs-1B:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000 -gpgpu_dram_scheduler 0"
+
+TITANX-P102-mshr-1B-L1-off:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 500000000 -gpgpu_cache:dl1  S:32:128:6,L:L:f:N:H,A:4000:8,16:0,32"
+
+TITANX-P102-mshr-1B-L1-on:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 500000000 -gpgpu_cache:dl1  S:32:128:6,L:L:f:N:H,A:4000:8,16:0,32 -gmem_skip_L1D 0"
+
+TITANX-P102-2cores-mshr-1B-L1-off:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 200000000 -gpgpu_cache:dl1  S:32:128:6,L:L:f:N:H,A:4000:8,16:0,32"
+
+TITANX-P102-2cores-mshr-1B-L1-on:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 200000000 -gpgpu_cache:dl1  S:32:128:6,L:L:f:N:H,A:4000:8,16:0,32 -gmem_skip_L1D 0"
+
+TITANX-P102-4cores-mshr-1B-L1-off:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 200000000 -gpgpu_cache:dl1  S:32:128:6,L:L:f:N:H,A:4000:8,16:0,32"
+
+TITANX-P102-4cores-mshr-1B-L1-on:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 200000000 -gpgpu_cache:dl1  S:32:128:6,L:L:f:N:H,A:4000:8,16:0,32 -gmem_skip_L1D 0"
+
 TITANX-P102-lrr:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: "-gpgpu_scheduler lrr"
@@ -138,6 +202,46 @@ TITANX-P102-PTXPLUS:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 13"
 
+P100_MCM_baseline:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/Baseline/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_xbar:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/xbar/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_1xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/1xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_2xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/2xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_4xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/4xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_8xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/8xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_1xBW_cons:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_2xBW_cons:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/2xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_4xBW_cons:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/4xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+P100_MCM_8xBW_cons:
+    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/8xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
 # Extra configs - these are composable.
 # The names here will be appended to the basefile name with hyphens
 #   For example TITANX_P102-L1ON-PTXPLUS
@@ -147,6 +251,21 @@ PTXPLUS:
 L1ON:
     extra_params: "-gmem_skip_L1D 0"
 
+FCFS:
+    extra_params: "-gpgpu_dram_scheduler 0"
+
+LARGE_QUEUE:
+    extra_params: "-gpgpu_frfcfs_dram_sched_queue_size 128"
+
+MED_QUEUE:
+    extra_params: "-gpgpu_frfcfs_dram_sched_queue_size 62"
+
+SMALL_QUEUE:
+    extra_params: "-gpgpu_frfcfs_dram_sched_queue_size 16"
+
+NORMAL_INDEXING:
+    extra_params: "-memory_partition_indexing 0"
+
 COPYK:
     extra_params: "-perf_sim_memcpy 1"
 
@@ -154,84 +273,39 @@ COPYK:
     extra_params: "-gpgpu_max_insn 2000000000"
 
 1B:
-    extra_params: "-gpgpu_max_insn 2000000000"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+200M:
+    extra_params: "-gpgpu_max_insn 200000000"
+
+CDP:
+    extra_params: " -gpgpu_cdp_enabled 1 \n -gpgpu_max_concurrent_kernel 32 \n -gpgpu_local_mem_map 0 \n -gpgpu_concurrent_kernel_sm 1 \n -gpgpu_kernel_launch_latency 100 \n -cdp_latency 0,0,0,0,0 \n -gpgpu_deadlock_detect 1"
+
+FT:
+    extra_params: "-mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048"
+
+CTA1:
+    extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 1"
+
+CTA2:
+    extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 2"
+
+CTA4:
+    extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 4"
+
+CTA8:
+    extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 8"
+
+CTA16:
+    extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 16"
+
+CTA32:
+    extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 32"
+
+CTA64:
+    extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 64"
+
 
 # Experimental - for SM 60 PTXplus support
 PTXPLUS_SM6:
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 62 -gpgpu_ptx_force_min_capability 60"
-
-P100-MCM-baseline:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/Baseline/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-xbar:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/xbar/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-1xBW:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-2xBW:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/2xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-4xBW:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/4xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-8xBW:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/RR_Parition/8xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-1xBW-cons:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-2xBW-cons:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/2xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-4xBW-cons:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/4xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-8xBW-cons:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/8xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000"
-
-P100-MCM-1xBW-ft-policy:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 0 -mcm_cta_sched_grain 1"
-
-P100-MCM-1xBW-sched-policy:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 0 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 16"
-
-P100-MCM-1xBW-optim-1:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 1"
-
-P100-MCM-1xBW-optim-2:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 2"
-
-P100-MCM-1xBW-optim-4:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 4"
-
-P100-MCM-1xBW-optim-8:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 8"
-
-P100-MCM-1xBW-optim-16:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 16"
-
-P100-MCM-1xBW-optim-32:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 32"
-
-P100-MCM-1xBW-optim-64:
-    base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/consecutive_partition/1xBW/gpgpusim.config"
-    extra_params: "-gpgpu_max_insn 1000000000 -mcm_vm_ft_policy 1 -mcm_vm_pagesize 2048 -mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 64"

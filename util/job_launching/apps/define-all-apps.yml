@@ -165,6 +165,15 @@ sdk-4.2-min:
         - SobelFilter:
             - 
 
+others-stream:
+    exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
+    data_dirs: "../../benchmarks/data_dirs/cuda/sdk/4.2/"
+    execs:
+        - stream:
+            - 26214400 1024 448
+        - extreme-irreguler:
+            - 26214400 1024 448
+
 others:
     exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
     data_dirs: "../../benchmarks/data_dirs/cuda/sdk/4.2/"
@@ -201,6 +210,18 @@ others:
             - 2621440 256 6 32
         - triad:
             - 2621440 256 6 32
+        - stream4cores:
+            - 262144000 1024 448
+        - stream2cores:
+            - 262144000 1024 448
+        - stream:
+            - 26214400 1024 448
+        - extreme-irreguler-4cores:
+            - 26214400 1024 448
+        - extreme-irreguler-2cores:
+            - 26214400 1024 448
+        - extreme-irreguler:
+            - 26214400 1024 448
 
 # dragon-naive
 dragon-naive:
@@ -293,14 +314,14 @@ dragon-cdp:
             - -g ./data/sample_cdp.gr -e -v --cdp
             - -g ./data/citationCiteseer.graph -f metis -e -v --cdp
             - -g ./data/coPapersDBLP.graph -f metis -e -v --cdp --sf 1.5
-#        - testAmr-cdp:
-#            - -v -e --cdp -r 20
+        - testAmr-cdp:
+            - -v -e --cdp -r 20
         - testSssp-cdp:
             - -g ./data/sample_cdp.gr -e -v --cdp
             - -g ./data/citationCiteseer.graph -f metis -e -v --cdp
             - -g ./data/coPapersDBLP.graph -f metis -e -v --cdp
-#        - testJoin-cdp:
-#            - -v -e --cdp -l 204800 -r 204800
+        - testJoin-cdp:
+            - -v -e --cdp -l 204800 -r 204800
 
 rodinia-3.1:
     exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"

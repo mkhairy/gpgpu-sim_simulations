@@ -192,6 +192,12 @@ others:
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/spmv/
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/VecAdd/
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/TRIAD/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/stream4cores/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/stream2cores/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/stream/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/extreme-irreguler-4cores/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/extreme-irreguler-2cores/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/others/extreme-irreguler/
 	mv cuda/others/copy_kernel/copy_kernel $(BINDIR)/$(BINSUBDIR)/copy_kernel
 	mv cuda/others/copy_vector4_kernel/copy_vector4_kernel $(BINDIR)/$(BINSUBDIR)/copy_vector4_kernel
 	#mv cuda/others/GUPS/gups $(BINDIR)/$(BINSUBDIR)/gups
@@ -208,6 +214,12 @@ others:
 	mv cuda/others/spmv/spmv $(BINDIR)/$(BINSUBDIR)/spmv
 	mv cuda/others/VecAdd/Vector $(BINDIR)/$(BINSUBDIR)/Vector
 	mv cuda/others/TRIAD/triad $(BINDIR)/$(BINSUBDIR)/triad
+	mv cuda/others/stream4cores/stream4cores $(BINDIR)/$(BINSUBDIR)/stream4cores
+	mv cuda/others/stream2cores/stream2cores $(BINDIR)/$(BINSUBDIR)/stream2cores
+	mv cuda/others/stream/stream $(BINDIR)/$(BINSUBDIR)/stream
+	mv cuda/others/extreme-irreguler-4cores/extreme-irreguler-4cores $(BINDIR)/$(BINSUBDIR)/extreme-irreguler-4cores
+	mv cuda/others/extreme-irreguler-2cores/extreme-irreguler-2cores $(BINDIR)/$(BINSUBDIR)/extreme-irreguler-2cores
+	mv cuda/others/extreme-irreguler/extreme-irreguler $(BINDIR)/$(BINSUBDIR)/extreme-irreguler
 
 ispass-2009:
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/ispass-2009/AES
