@@ -43,13 +43,24 @@ extern "C" void convolutionColumnCPU(
 );
 
 
-void ParseArguments(int argc, char** argv, int& size)
+void ParseArguments(int argc, char** argv, int& sizeW, int& sizeH)
 {
     for (int i = 0; i < argc; ++i) {
         if (strcmp(argv[i], "--size") == 0 ||
             strcmp(argv[i], "-size") == 0) 
         {
-            size = atoi(argv[i+1]);
+            sizeW = atoi(argv[i+1]);
+            sizeH = sizeW;
+        }
+        if (strcmp(argv[i], "--sizeW") == 0 ||
+            strcmp(argv[i], "-sizeW") == 0) 
+        {
+            sizeW = atoi(argv[i+1]);
+        }
+        if (strcmp(argv[i], "--sizeH") == 0 ||
+            strcmp(argv[i], "-sizeH") == 0) 
+        {
+            sizeH = atoi(argv[i+1]);
         }
     }
 }
@@ -77,16 +88,12 @@ int main(int argc, char **argv)
         *d_Buffer;
 
 
-<<<<<<< HEAD
-    const int imageW = 3072;
-    const int imageH = 3072;
-=======
-    int size = 3072;
-    ParseArguments(argc,argv,size);
+    int sizeW = 3072/8;
+    int sizeH = 3072/16;
+    ParseArguments(argc,argv,sizeW,sizeH);
 
-    const int imageW = size/8;
-    const int imageH = size/16;
->>>>>>> 655bb1cd986ffe3b025104268c87fb0f10921888
+    const int imageW = sizeW;
+    const int imageH = sizeH;
     const int iterations = 1;
 
     unsigned int hTimer;
@@ -121,7 +128,7 @@ int main(int argc, char **argv)
         cutilSafeCall( cudaMemcpy(d_Input, h_Input, imageW * imageH * sizeof(float), cudaMemcpyHostToDevice) );
 
     shrLog("Running GPU convolution (%u identical iterations)...\n\n", iterations);
-        for(int i = -1; i < iterations; i++){
+        for(int i = 0; i < iterations; i++){
             //i == -1 -- warmup iteration
             if(i == 0){
                 cutilSafeCall( cutilDeviceSynchronize() );

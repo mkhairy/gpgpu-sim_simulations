@@ -40,11 +40,11 @@ def make_pretty_app_list(apps_included):
 
 def make_submission_quality_image(image_type, traces):
     data = []
-    markers =[dict(size = 5, color = 'rgba(0, 0, 0, 1.0)', line = dict(width = 2,color = 'rgb(0, 0, 0)')),
-              dict(size = 14,color = 'rgba(210,105,30, .3)',line = dict(width = 2,color = 'rgb(0, 0, 0)')),
-              dict(size = 10,color = 'rgba(0, 182, 0, .9)',line = dict(width = 2,)),
-              dict(size = 10,color = 'rgba(0, 0, 193, .9)',line = dict(width = 2,)),
-              dict(size = 10,color = 'rgba(155, 155, 155, .9)',line = dict(width = 2,))]
+    markers =[dict(size = 14,color = 'rgba(210,105,30, .4)'),
+              dict(size = 3, color = 'rgba(0, 0, 0, 1.0)'),
+              dict(size = 10,color = 'rgba(0, 182, 0, .9)'),
+              dict(size = 10,color = 'rgba(0, 0, 193, .9)'),
+              dict(size = 10,color = 'rgba(155, 155, 155, .9)')]
     count = 0
     annotations = []
     agg_cfg = ""
@@ -53,6 +53,9 @@ def make_submission_quality_image(image_type, traces):
     for trace, layout, cfg, anno, plotfile, err_dropped, apps_included in traces:
         trace.marker = markers[count %len(markers)]
         trace.mode = "markers"
+        trace.error_x.color = trace.marker.color
+        # Set the alpha on the error bars to be 30%
+        trace.error_x.color =  re.sub(r"(,.*,.*),.*\)",r"\1,0.3)", trace.error_x.color)
         data.append(trace)
         annotations.append(make_anno1(anno,10,0,1.115 - count * 0.05))
         print_anno += anno + " :: {0} high error points dropped from Err calc\n".format(err_dropped)
@@ -181,6 +184,8 @@ def get_sim_csv_data(filepath, logger):
                         if len(split) > 1:
                             appargs = split[0]
                             kname = split[1]
+                            if len(split) > 2:
+                                kname += "--" + split[2]
                             if kname == "all_kernels":
                                 continue
                             if appargs == last_appargs:
@@ -227,6 +232,18 @@ def parse_hw_csv(csv_file, hw_data, appargs, logger):
     processedCycle = False
     cfg = ""
     cfg_col = None
+    cycle_file_count = options.cycle_runs_to_burn # Start at 3 - assume we burn the first 3 runs to get DVFS scaled up
+
+    # The filename passed in is from the groups of latest collected CSVs, but it is not the .3 file -
+    # this little piece of code makes sure we start at the .3 filename
+    beginning_file = csv_file[:-1] + str(options.cycle_runs_to_burn)
+    if os.path.exists(beginning_file):
+        csv_file = beginning_file
+    else:
+        print "WARNING -- {0} does not exist - using {1} instead.".format(beginning_file, csv_file)
+
+    if os.path.exists(csv_file + ".{0}".format(cycle_file_count)):
+        csv_file = csv_file + ".{0}".format(cycle_file_count)
     while processFiles:
         with open(csv_file, 'r') as data_file:
             logger.log("Parsing HW csv file {0}".format(csv_file))
@@ -264,7 +281,12 @@ def parse_hw_csv(csv_file, hw_data, appargs, logger):
                     if processedCycle:
                         count = 0
                         for elem in row:
-                            kdata[kcount][header[count]] = elem
+                            if header[count] not in kdata[kcount]:
+                                kdata[kcount][header[count]] = []
+                            try:
+                                kdata[kcount][header[count]].append(float(elem))
+                            except ValueError:
+                                kdata[kcount][header[count]].append(elem)
                             count += 1
                         kname = kdata[kcount]["Kernel"]
                         #logger.log("Kernel Launch {0}: HW Kernel {1} found".format(kcount,kname))
@@ -277,20 +299,30 @@ def parse_hw_csv(csv_file, hw_data, appargs, logger):
                             exit()
                         cfg = row[cfg_col]
 
-                        kstat = {}
                         count = 0
+                        if len(kdata) <= kcount:
+                            kdata.append({})
                         for elem in row:
-                            kstat[header[count]] = elem
+                            if header[count] not in kdata[kcount]:
+                                kdata[kcount][header[count]] = []
+                            try:
+                                kdata[kcount][header[count]].append(float(elem))
+                            except ValueError:
+                                kdata[kcount][header[count]].append(elem)
                             count += 1
-                        kname = kstat["Name"]
-                        #logger.log("Kernel Launch {0}: HW Kernel {1} found".format(kcount,kname))
-                        kdata.append(kstat)
+                        #logger.log("Kernel Launch {0}: HW Kernel {1} found".format(kcount,kdata[kcount]["Name"]))
                         kcount += 1
                     continue
+        logger.log("Kernels found: {0}".format(kcount))
         # Drop the .cycle off the name
-        if os.path.exists(csv_file[:-6]) and not processedCycle and len(kdata) > 0:
+        cycle_file_count += 1
+        no_cycle_filename = re.sub(r'(.*\.csv).*', r'\1', csv_file)
+        next_cycle_filename = re.sub(r'(.*\.cycle).*', r'\1', csv_file) + ".{0}".format(cycle_file_count)
+        if os.path.exists(next_cycle_filename):
+            csv_file = next_cycle_filename
+        elif os.path.exists(no_cycle_filename) and not processedCycle and len(kdata) > 0:
             processedCycle = True
-            csv_file = csv_file[:-6]
+            csv_file = no_cycle_filename
         else:
             processFiles = False
 
@@ -327,6 +359,11 @@ parser.add_option("-i", "--image_type", dest="image_type",
                        " if you need submission quality PDFs. You will only generate html. If everything is setup"+\
                        " properly, just specify the right file extension (pdf or png) here.",
                   default="")
+parser.add_option("-B", "--cycle_runs_to_burn", dest="cycle_runs_to_burn", type="int",
+                  help="When collecting data from multiple real hardware cycle runs - ignore the first"+\
+                       " N runs defined by this variable. This helps to eliminate HW cycle error caused"+\
+                       " by DVFS",
+                  default=3)
 
 (options, args) = parser.parse_args()
 common.load_defined_yamls()
@@ -343,10 +380,12 @@ hw_data = {}
 for root, dirs, files in os.walk(options.hardware_dir):
     for d in dirs:
         csv_dir = os.path.join(root, d)
-        csvs = glob.glob(os.path.join(csv_dir,"*.cycle"))
+        csvs = glob.glob(os.path.join(csv_dir,"*.cycle*"))
         logger.log("Found HW cycle {0} csvs in {1}\n".format(len(csvs),csv_dir))
         if len(csvs) > 0:
-            parse_hw_csv(max(csvs, key=os.path.getctime),hw_data, os.path.join(os.path.basename(root),d), logger)
+            # Pass in the lexiconically sorted newest file name. Cannot use getm/ctime because these files are
+            # created at the same time on the local file system from a tarbal;.
+            parse_hw_csv(sorted(csvs)[-1],hw_data, os.path.join(os.path.basename(root),d), logger)
 
 
 #Get the simulator data
@@ -377,6 +416,8 @@ for cfg,sim_for_cfg in sim_data.iteritems():
             continue
 
         hw_array = []
+        hw_error = []
+        hw_error_min = []
         sim_array = []
         label_array = []
         color_array = []
@@ -422,6 +463,15 @@ for cfg,sim_for_cfg in sim_data.iteritems():
                            count += 1
                            hw_array = hw_array[:-1]
                            continue
+ 
+                        if correl.hw_error != None:
+                            maxe,mine = eval(correl.hw_error)
+                            hw_error.append(maxe)
+                            hw_error_min.append(mine)
+                        else:
+                            hw_error.append(0)
+                            hw_error_min.append(0)
+
 
                         if appargs not in apps_included:
                             apps_included[appargs] = [];
@@ -432,6 +482,8 @@ for cfg,sim_for_cfg in sim_data.iteritems():
 
                         if hw_array[-1] > 0:
                             err = sim_array[-1] - hw_array[-1]
+                            hw_high = (hw_error[-1]/hw_array[-1]) * 100
+                            hw_low = (hw_error_min[-1]/hw_array[-1]) * 100
                             err = (err / hw_array[-1]) * 100
                             if abs(err) < 1.0:
                                 num_less_than_one_percent += 1
@@ -444,7 +496,8 @@ for cfg,sim_for_cfg in sim_data.iteritems():
                                 apps_included[appargs].append(abs(err))
                             else:
                                 err_dropped_stats += 1
-                        label_array.append(appargs + "--" + hw_klist[count]["Name"] + " (Err={0:.2f}%)".format(err))
+                        label_array.append(appargs + "--" + sim_klist[count]["Kernel"] +
+                            " (Err={0:.2f}%,HW-Range=+{1:.2f}%/-{2:.2f}%)".format(err, hw_high,hw_low))
                         count += 1
                         if hw_array[-1] > max_axis_val:
                             max_axis_val = hw_array[-1]
@@ -475,6 +528,13 @@ for cfg,sim_for_cfg in sim_data.iteritems():
             y = sim_array,
             mode = 'markers',
             text=label_array,
+            error_x=dict(
+                type='data',
+                symmetric=False,
+                array=hw_error,
+                arrayminus=hw_error_min,
+                visible=True
+            ),
             name=cfg,
         )
         if not options.err_off:
@@ -484,11 +544,11 @@ for cfg,sim_for_cfg in sim_data.iteritems():
         layout = Layout(
             title=correl.chart_name,
              xaxis=dict(
-                title='Hardware {0}'.format(hw_cfg),
+                title='Hardware {0} {1}'.format(hw_cfg, correl.chart_name),
                 range=[0,max_axis_val*1.1]
             ),
             yaxis=dict(
-                title='GPGPU-Sim',
+                title='GPGPU-Sim {0}'.format(correl.chart_name),
                 range=[0,max_axis_val*1.1]
             ),
         )

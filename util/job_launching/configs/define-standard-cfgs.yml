@@ -1,21 +1,18 @@
 # Basefile Configs
-GTX480:
-    base_file: "$GPGPUSIM_ROOT/configs/GTX480/gpgpusim.config"
 
-QUADROFX5600:
-    base_file: "$GPGPUSIM_ROOT/configs/QuadroFX5600/gpgpusim.config"
+# Volta
+TITANV:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM7_TITANV/gpgpusim.config"
 
-QUADROFX5800:
-    base_file: "$GPGPUSIM_ROOT/configs/QuadroFX5800/gpgpusim.config"
+# Pascal
+GTX1080:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM6_GTX1080/gpgpusim.config"
 
-TESLAC2050:
-    base_file: "$GPGPUSIM_ROOT/configs/TeslaC2050/gpgpusim.config"
+TITANX:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM6_TITANX/gpgpusim.config"
 
-GTX750Ti:
-    base_file: "$GPGPUSIM_ROOT/configs/GeForceGTX750Ti/gpgpusim.config"
-
-GTX1080Ti:
-    base_file: "$GPGPUSIM_ROOT/configs/GeForceGTX1080Ti/gpgpusim.config"
+P100:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM6_P100/gpgpusim.config"
 
 PASCALTITANX-1B:
     base_file: "$GPGPUSIM_ROOT2/configs/PascalTitanX/gpgpu-sim-3.x/gpgpusim.config"
@@ -65,6 +62,19 @@ P100-HBM-dualdisable:
 
 TITANX_P102:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
+
+# Maxwell
+# Note: This is small card that takes ~2x as long to simulate...
+GTX750:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM5_GTX750/gpgpusim.config"
+
+# Kepler
+# We have not correlated any Kepler cards
+
+# Fermi
+GTX480:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM2_GTX480/gpgpusim.config"
+############################################################################
 
 TITANX-P102-1B:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P102-GDDR5X/gpgpusim.config"
@@ -244,7 +254,7 @@ P100_MCM_8xBW_cons:
 
 # Extra configs - these are composable.
 # The names here will be appended to the basefile name with hyphens
-#   For example TITANX_P102-L1ON-PTXPLUS
+#   For example TITANX-L1ON-PTXPLUS
 PTXPLUS:
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 10"
 
@@ -293,6 +303,10 @@ CTA2:
 CTA4:
     extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 4"
 
+# Experimental - for SM 60 PTXplus support
+PTXPLUS_SM6:
+    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 62 -gpgpu_ptx_force_min_capability 60"
+
 CTA8:
     extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 8"
 
@@ -305,7 +319,19 @@ CTA32:
 CTA64:
     extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 64"
 
-
 # Experimental - for SM 60 PTXplus support
 PTXPLUS_SM6:
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 62 -gpgpu_ptx_force_min_capability 60"
+
+##############################################################################
+##############################################################################
+# Deprecated files in the public repo
+QUADROFX5600:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM1_QFX5600/gpgpusim.config"
+
+QUADROFX5800:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM1_QFX5800/gpgpusim.config"
+
+TESLAC2050:
+    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM2_C2050/gpgpusim.config"
+>>>>>>> 99fad87a4a1d8ee33e377ce369ac4cac85ec42c1

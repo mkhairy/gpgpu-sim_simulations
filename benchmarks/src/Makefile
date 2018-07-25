@@ -4,21 +4,21 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_4), 1)
-all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 dragon-cdp lonestargpu-2.0
+all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1 sdk-4.2 ispass-2009 dragon-cdp lonestargpu-2.0 polybench parboil shoc custom_apps
 else
-all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia-3.1
+all:   pannotia rodinia_2.0-ft proxy-apps microbench rodinia-3.1 sdk-4.2 ispass-2009 polybench parboil shoc custom_apps
 endif
 
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
-clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0
+clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil
 
 clean_data:
 	./clean_data.sh
 
 data:
 	mkdir -p $(BINDIR)/$(BINSUBDIR)/
-	bash ../get_data.sh
+	cd ../ && bash ./get_data.sh
 
 ###################################################################################################3
 # Rodinia 2.0 Functional Test Stuff
@@ -146,7 +146,8 @@ rodinia-3.1:
 #	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/rodinia/3.1/cuda/leukocyte/CUDA/
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/rodinia/3.1/cuda/hotspot3D/
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/rodinia/3.1/cuda/gaussian
-	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/rodinia/3.1/cuda/srad/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/rodinia/3.1/cuda/srad/srad_v1
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/rodinia/3.1/cuda/srad/srad_v2 -f Makefile_nvidia
 	if [ ${CUDA_VERSION_MAJOR} -gt 5 ]; then \
 		mv cuda/rodinia/3.1/cuda/huffman/pavle $(BINDIR)/$(BINSUBDIR)/huffman-rodinia-3.1; \
 	fi
@@ -164,8 +165,8 @@ rodinia-3.1:
 #	mv cuda/rodinia/3.1/cuda/leukocyte/CUDA/leukocyte $(BINDIR)/$(BINSUBDIR)/leukocyte-rodinia-3.1
 	mv cuda/rodinia/3.1/cuda/hotspot3D/3D $(BINDIR)/$(BINSUBDIR)/hotspot3D-rodinia-3.1
 	mv cuda/rodinia/3.1/cuda/gaussian/gaussian $(BINDIR)/$(BINSUBDIR)/gaussian-rodinia-3.1
-	mv cuda/rodinia/3.1/cuda/srad/srad_v2/srad $(BINDIR)/$(BINSUBDIR)/srad_v2-rodinia-3.1
 	mv cuda/rodinia/3.1/cuda/srad/srad_v1/srad $(BINDIR)/$(BINSUBDIR)/srad_v1-rodinia-3.1
+	mv $(BINDIR)/$(BINSUBDIR)/srad_v2 $(BINDIR)/$(BINSUBDIR)/srad_v2-rodinia-3.1
 	mv $(BINDIR)/$(BINSUBDIR)/backprop $(BINDIR)/$(BINSUBDIR)/backprop-rodinia-3.1
 	mv $(BINDIR)/$(BINSUBDIR)/bfs  $(BINDIR)/$(BINSUBDIR)/bfs-rodinia-3.1
 	mv $(BINDIR)/$(BINSUBDIR)/euler3d $(BINDIR)/$(BINSUBDIR)/cfd-rodinia-3.1
@@ -251,6 +252,100 @@ lonestargpu-2.0:
 	mv cuda/lonestargpu-2.0/apps/sssp/sssp $(BINDIR)/$(BINSUBDIR)/lonestar-sssp
 	mv cuda/lonestargpu-2.0/apps/sssp/sssp-wlc $(BINDIR)/$(BINSUBDIR)/lonestar-sssp-wlc
 	mv cuda/lonestargpu-2.0/apps/sssp/sssp-wln $(BINDIR)/$(BINSUBDIR)/lonestar-sssp-wln
+
+parboil:
+	make data
+	mkdir -p $(BINDIR)/$(BINSUBDIR)/
+	$(SETENV) cd cuda/parboil; ./parboil compile cutcp cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile bfs cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile histo cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile lbm cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile mri-gridding cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile mri-q cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile sad cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile sgemm cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile spmv cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile stencil cuda
+	$(SETENV) cd cuda/parboil; ./parboil compile tpacf cuda
+	mv ./cuda/parboil/benchmarks/lbm/build/cuda_default/lbm $(BINDIR)/$(BINSUBDIR)/parboil-lbm
+	mv ./cuda/parboil/benchmarks/cutcp/build/cuda_default/cutcp $(BINDIR)/$(BINSUBDIR)/parboil-cutcp
+	mv ./cuda/parboil/benchmarks/bfs/build/cuda_default/bfs $(BINDIR)/$(BINSUBDIR)/parboil-bfs
+	mv ./cuda/parboil/benchmarks/histo/build/cuda_default/histo $(BINDIR)/$(BINSUBDIR)/parboil-histo
+	mv ./cuda/parboil/benchmarks/mri-gridding/build/cuda_default/mri-gridding $(BINDIR)/$(BINSUBDIR)/parboil-mri-gridding
+	mv ./cuda/parboil/benchmarks/mri-q/build/cuda_default/mri-q $(BINDIR)/$(BINSUBDIR)/parboil-mri-q
+	mv ./cuda/parboil/benchmarks/sad/build/cuda_default/sad $(BINDIR)/$(BINSUBDIR)/parboil-sad
+	mv ./cuda/parboil/benchmarks/sgemm/build/cuda_default/sgemm $(BINDIR)/$(BINSUBDIR)/parboil-sgemm
+	mv ./cuda/parboil/benchmarks/spmv/build/cuda_default/spmv $(BINDIR)/$(BINSUBDIR)/parboil-spmv
+	mv ./cuda/parboil/benchmarks/stencil/build/cuda_default/stencil $(BINDIR)/$(BINSUBDIR)/parboil-stencil
+	mv ./cuda/parboil/benchmarks/tpacf/build/cuda_default/tpacf $(BINDIR)/$(BINSUBDIR)/parboil-tpacf
+
+polybench:
+	mkdir -p $(BINDIR)/$(BINSUBDIR)/
+	$(SETENV) cd cuda/polybench-gpu-1.0/CUDA/; sh ./compileCodes.sh "$(MAKE_ARGS)"
+	mv cuda/polybench-gpu-1.0/CUDA/2DCONV/2DConvolution.exe $(BINDIR)/$(BINSUBDIR)/polybench-2DConvolution
+	mv cuda/polybench-gpu-1.0/CUDA/2MM/2mm.exe $(BINDIR)/$(BINSUBDIR)/polybench-2mm
+	mv cuda/polybench-gpu-1.0/CUDA/3DCONV/3DConvolution.exe $(BINDIR)/$(BINSUBDIR)/polybench-3DConvolution
+	mv cuda/polybench-gpu-1.0/CUDA/3MM/3mm.exe $(BINDIR)/$(BINSUBDIR)/polybench-3mm
+	mv cuda/polybench-gpu-1.0/CUDA/ATAX/atax.exe $(BINDIR)/$(BINSUBDIR)/polybench-atax
+	mv cuda/polybench-gpu-1.0/CUDA/BICG/bicg.exe $(BINDIR)/$(BINSUBDIR)/polybench-bicg
+	mv cuda/polybench-gpu-1.0/CUDA/CORR/correlation.exe $(BINDIR)/$(BINSUBDIR)/polybench-correlation
+	mv cuda/polybench-gpu-1.0/CUDA/COVAR/covariance.exe $(BINDIR)/$(BINSUBDIR)/polybench-covariance
+	mv cuda/polybench-gpu-1.0/CUDA/FDTD-2D/fdtd2d.exe $(BINDIR)/$(BINSUBDIR)/polybench-fdtd2d
+	mv cuda/polybench-gpu-1.0/CUDA/GEMM/gemm.exe $(BINDIR)/$(BINSUBDIR)/polybench-gemm
+	mv cuda/polybench-gpu-1.0/CUDA/GESUMMV/gesummv.exe $(BINDIR)/$(BINSUBDIR)/polybench-gesummv
+	mv cuda/polybench-gpu-1.0/CUDA/GRAMSCHM/gramschmidt.exe $(BINDIR)/$(BINSUBDIR)/polybench-gramschmidt
+	mv cuda/polybench-gpu-1.0/CUDA/MVT/mvt.exe $(BINDIR)/$(BINSUBDIR)/polybench-mvt
+	mv cuda/polybench-gpu-1.0/CUDA/SYR2K/syr2k.exe $(BINDIR)/$(BINSUBDIR)/polybench-syr2k
+	mv cuda/polybench-gpu-1.0/CUDA/SYRK/syrk.exe $(BINDIR)/$(BINSUBDIR)/polybench-syrk
+
+shoc:
+	mkdir -p $(BINDIR)/$(BINSUBDIR)/
+	cd cuda/shoc-master/; ./configure; $(SETENV) make $(MAKE_ARGS); $(SETENV) make $(MAKE_ARGS) -C src/cuda
+	mv cuda/shoc-master/src/cuda/level0/BusSpeedDownload $(BINDIR)/$(BINSUBDIR)/shoc-BusSpeedDownload
+	mv cuda/shoc-master/src/cuda/level0/BusSpeedReadback $(BINDIR)/$(BINSUBDIR)/shoc-BusSpeedReadback
+	mv cuda/shoc-master/src/cuda/level0/DeviceMemory $(BINDIR)/$(BINSUBDIR)/shoc-DeviceMemory
+	mv cuda/shoc-master/src/cuda/level0/MaxFlops $(BINDIR)/$(BINSUBDIR)/shoc-MaxFlops
+	mv cuda/shoc-master/src/cuda/level1/bfs/BFS $(BINDIR)/$(BINSUBDIR)/shoc-BFS
+	mv cuda/shoc-master/src/cuda/level1/fft/FFT $(BINDIR)/$(BINSUBDIR)/shoc-FFT
+	mv cuda/shoc-master/src/cuda/level1/gemm/GEMM $(BINDIR)/$(BINSUBDIR)/shoc-GEMM
+	mv cuda/shoc-master/src/cuda/level1/md/MD $(BINDIR)/$(BINSUBDIR)/shoc-MD
+	mv cuda/shoc-master/src/cuda/level1/md5hash/MD5Hash $(BINDIR)/$(BINSUBDIR)/shoc-MD5Hash
+	mv cuda/shoc-master/src/cuda/level1/neuralnet/NeuralNet $(BINDIR)/$(BINSUBDIR)/shoc-NeuralNet
+	mv cuda/shoc-master/src/cuda/level1/reduction/Reduction $(BINDIR)/$(BINSUBDIR)/shoc-Reduction
+	mv cuda/shoc-master/src/cuda/level1/scan/Scan $(BINDIR)/$(BINSUBDIR)/shoc-Scan
+	mv cuda/shoc-master/src/cuda/level1/sort/Sort $(BINDIR)/$(BINSUBDIR)/shoc-Sort
+	mv cuda/shoc-master/src/cuda/level1/spmv/Spmv $(BINDIR)/$(BINSUBDIR)/shoc-Spmv
+	mv cuda/shoc-master/src/cuda/level1/stencil2d/Stencil2D $(BINDIR)/$(BINSUBDIR)/shoc-Stencil2D
+	mv cuda/shoc-master/src/cuda/level1/triad/Triad $(BINDIR)/$(BINSUBDIR)/shoc-Triad
+	mv cuda/shoc-master/src/cuda/level2/qtclustering/QTC $(BINDIR)/$(BINSUBDIR)/shoc-QTC
+	mv cuda/shoc-master/src/cuda/level2/s3d/S3D $(BINDIR)/$(BINSUBDIR)/shoc-S3D
+	mv cuda/shoc-master/src/stability/Stability $(BINDIR)/$(BINSUBDIR)/shoc-Stability
+
+custom_apps:
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/custom-apps/shoc-modified-spmv/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/custom-apps/rodinia-kmn-no-tex/
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cuda/custom-apps/sdk-matrixMul-modified/
+
+clean_custom_apps:
+	make clean -C cuda/custom-apps/shoc-modified-spmv/
+	make clean -C cuda/custom-apps/rodinia-kmn-no-tex/
+	make clean -C cuda/custom-apps/sdk-matrixMul-modified/
+
+clean_shoc:
+	cd cuda/shoc-master/; make clean; make distclean
+
+clean_parboil:
+	$(SETENV) cd cuda/parboil; ./parboil clean cutcp cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean bfs cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean histo cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean lbm cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean mri-gridding cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean mri-q cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean sad cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean sgemm cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean spmv cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean stencil cuda
+	$(SETENV) cd cuda/parboil; ./parboil clean tpacf cuda
 
 clean_lonestargpu-2.0:
 	$(setenv) make $(make_args) noinline=$(noinline) -C cuda/lonestargpu-2.0 clean

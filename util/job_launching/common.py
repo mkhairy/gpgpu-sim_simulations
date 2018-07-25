@@ -5,12 +5,23 @@ import re
 import os
 import yaml
 import glob
+import hashlib
 
 this_directory = os.path.dirname(os.path.realpath(__file__)) + "/"
 
 defined_apps = {}
 defined_baseconfigs = {}
 defined_xtracfgs = {}
+
+def get_argfoldername( args ):
+    if args == "" or args == None:
+        return "NO_ARGS"
+    else:
+        foldername = re.sub(r"[^a-z^A-Z^0-9]", "_", str(args).strip())
+        # For every long arg lists - create a hash of the input args
+        if len(str(args)) > 256:
+            foldername = "hashed_args_" + hashlib.md5(args).hexdigest()
+        return foldername
 
 # Test to see if the passed config adheres to any defined configs and add it to the configrations to run/collect.
 def get_config(name, defined_baseconfigs, defined_xtracfgs):
@@ -52,6 +63,13 @@ def parse_app_definition_yaml( def_yml, apps ):
             apps[suite + ":" + exe_name].append( ( benchmark_yaml[suite]['exec_dir'],
                                  benchmark_yaml[suite]['data_dirs'],
                                  exe_name, args_list ) )
+            count = 0
+            for args in args_list:
+                apps[suite + ":" + exe_name + ":" + str(count) ] = []
+                apps[suite + ":" + exe_name + ":" + str(count) ].append( ( benchmark_yaml[suite]['exec_dir'],
+                                    benchmark_yaml[suite]['data_dirs'],
+                                    exe_name, [args] ) )
+                count += 1
     return
 
 def parse_config_definition_yaml( def_yml, defined_baseconfigs, defined_xtracfgs ):
