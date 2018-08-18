@@ -18,7 +18,7 @@ EXE = locality_sector
 #-ptxas-options=-v
 
 release:
-	$(CC)  -arch=sm_61  -Xptxas -v -Xptxas -dlcm=cg  $(SRC) -o $(EXE) -I$(INCLUDE) -L$(LIB) 
+	$(CC)  -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_60,code=\"sm_60,compute_60\"  -Xptxas -v -Xptxas -dlcm=cg  $(SRC) -o $(EXE) -I$(INCLUDE) -L$(LIB) 
 
 enum:
 	$(CC) -deviceemu $(SRC) -o $(EXE) -I$(INCLUDE) -L$(LIB) 
