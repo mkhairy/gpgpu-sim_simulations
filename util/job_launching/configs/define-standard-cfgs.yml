@@ -216,6 +216,130 @@ P100_MCM_baseline:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/Baseline/gpgpusim.config"
     extra_params: "-gpgpu_max_insn 1000000000"
 
+TITANVB_CHIPLET_CONS:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-anynet/xbar_cons/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_BASELINE:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/Baseline/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_dyn_xbar:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/xbar/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_dyn_xbar2x:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/xbar2xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_dyn_xbar4x:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/xbar4xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_dyn_xbar8x:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/xbar8xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+256SM_CHIPLET_xbar:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/xbar/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_xbar2x:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/xbar2xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_xbar4x:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/xbar4xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_xbar8x:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/xbar8xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_dyn_1xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/PTP1xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_dyn_2xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/PTP2xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_dyn_4xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/PTP4xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_dyn_8xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/PTP8xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_1xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/PTP1xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_2xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/PTP2xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_4xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/PTP4xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_8xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/PTP8xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_CHIPLET_CONS_16xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new/PTP-1xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_ring_dyn_1xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/ring/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_ring_dyn_2xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/ring2xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_ring_dyn_4xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/ring4xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+256SM_ring_dyn_8xBW:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/256SM/consecutive_partition_new_dynamic/ring8xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+128SM_CHIPLET_BASELINE:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/128SM/Baseline/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+128SM_CHIPLET_xbar:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/128SM/consecutive_partition/xbar/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+128SM_CHIPLET_CONS_1X:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/128SM/consecutive_partition/1xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000" 
+
+128SM_CHIPLET_CONS_2X:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/128SM/consecutive_partition/2xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+128SM_CHIPLET_CONS_4X:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/128SM/consecutive_partition/4xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+128SM_CHIPLET_CONS_8X:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/128SM/consecutive_partition/8xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+128SM_CHIPLET_CONS_16X:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/128SM/consecutive_partition/16xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+
+128SM_CHIPLET_CONS_32X:
+    base_file: "$GPGPUSIM_ROOT/configs/Volta-V100-HBM-mcm/128SM/consecutive_partition/32xBW/gpgpusim.config"
+    extra_params: "-gpgpu_max_insn 1000000000"
+    
 P100_MCM_xbar:
     base_file: "$GPGPUSIM_ROOT/configs/Pascal-P100-HBM-anynet/xbar/gpgpusim.config"
     extra_params: "-gpgpu_max_insn 1000000000"
@@ -256,7 +380,10 @@ P100_MCM_8xBW_cons:
 # The names here will be appended to the basefile name with hyphens
 #   For example TITANX-L1ON-PTXPLUS
 PTXPLUS:
-    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 10"
+    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 13"
+
+SM_2:
+    extra_params: "-gpgpu_ptx_force_max_capability 20"
 
 L1ON:
     extra_params: "-gmem_skip_L1D 0"
@@ -288,6 +415,9 @@ COPYK:
 200M:
     extra_params: "-gpgpu_max_insn 200000000"
 
+500M:
+    extra_params: "-gpgpu_max_insn 500000000"
+
 CDP:
     extra_params: " -gpgpu_cdp_enabled 1 \n -gpgpu_max_concurrent_kernel 32 \n -gpgpu_local_mem_map 0 \n -gpgpu_concurrent_kernel_sm 1 \n -gpgpu_kernel_launch_latency 100 \n -cdp_latency 0,0,0,0,0 \n -gpgpu_deadlock_detect 1"
 
@@ -302,6 +432,12 @@ CTA2:
 
 CTA4:
     extra_params: "-mcm_coarse_grain_cta_sched 1 -mcm_cta_sched_grain 4"
+
+100M:
+    extra_params: "-gpgpu_max_insn 100000000"
+
+FLUSHL1:
+    extra_params: "-gpgpu_flush_l1_cache 1"
 
 # Experimental - for SM 60 PTXplus support
 PTXPLUS_SM6:
@@ -323,6 +459,46 @@ CTA64:
 PTXPLUS_SM6:
     extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 62 -gpgpu_ptx_force_min_capability 60"
 
+# CHIPLET config
+ALIGN: 
+    extra_params: "-mcm_coarse_grain_cta_sched 4"
+
+NAIVE:
+    extra_params: "-mcm_coarse_grain_cta_sched 0"
+
+ROW:
+    extra_params: "-mcm_coarse_grain_cta_sched 2"
+
+COL:
+    extra_params: "-mcm_coarse_grain_cta_sched 3"
+
+SKW:
+    extra_params: "-mcm_coarse_grain_cta_sched 5"
+    
+DLRR:
+    extra_params: "-restrictive_RR_assignement 0"
+
+DREMOTE:
+    extra_params: "-cache_remote_data 0  -gpgpu_cache:dl2 S:64:128:16,L:B:m:L:L,A:256:4,32:0,32"
+
+RONCE:
+    extra_params: "-cache_remote_only_once 1"
+
+RONCESAMPLE:
+    extra_params: "-cache_remote_only_once_sampling_period 5000"    
+
+DISFT:
+    extra_params: "-mcm_vm_ft_policy 0"
+
+CGM:
+    extra_params: "-mcm_vm_ft_policy 2"
+
+FT:
+    extra_params: "-mcm_vm_ft_policy 1"
+
+SMP:
+    extra_params: "-mcm_sm_vm_ft_latency 20000"
+
 ##############################################################################
 ##############################################################################
 # Deprecated files in the public repo
@@ -334,4 +510,3 @@ QUADROFX5800:
 
 TESLAC2050:
     base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM2_C2050/gpgpusim.config"
->>>>>>> 99fad87a4a1d8ee33e377ce369ac4cac85ec42c1
