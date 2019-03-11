@@ -44,7 +44,6 @@ parser.add_option("-S", "--sleep_time", dest="sleep_time", default="30",
 parser.add_option("-I", "--ignore_failures", dest="ignore_failures", action="store_true",
                   help="If some of the runs have errors - do not return an error code.")
 
-
 (options, args) = parser.parse_args()
 options.logfile = options.logfile.strip()
 options.sim_name = options.sim_name.strip()
@@ -55,6 +54,7 @@ failed_job_file = None
 
 while True:
     jobstatus_out_file = open(jobstatus_out_filename, 'w+')
+
     if options.verbose:
         print "Calling job_status.py"
     if subprocess.call([os.path.join(this_directory, "job_status.py") ,"-l", options.logfile, "-N", options.sim_name],
@@ -111,6 +111,7 @@ while True:
         print "All {0} Tests Done.".format(total)
         if num_error == 0:
             print "Congratulations! All Tests Pass!"
+            exit(0)
         else:
             print "Something did not pass."
 

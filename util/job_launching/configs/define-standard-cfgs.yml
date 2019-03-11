@@ -2,6 +2,7 @@
 
 # Volta
 TITANV:
+<<<<<<< HEAD
     base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM7_TITANV/gpgpusim.config"
 
 # Pascal
@@ -70,10 +71,13 @@ GTX750:
 
 # Kepler
 # We have not correlated any Kepler cards
+=======
+    base_file: "$GPGPUSIM_ROOT/configs/tested-cfgs/SM7_TITANV/gpgpusim.config"
+>>>>>>> efbd8fd40c37babd597e101f2e559b75550567d6
 
 # Fermi
 GTX480:
-    base_file: "$GPGPUSIM_ROOT/configs/4.x-cfgs/SM2_GTX480/gpgpusim.config"
+    base_file: "$GPGPUSIM_ROOT/configs/tested-cfgs/SM2_GTX480/gpgpusim.config"
 ############################################################################
 
 TITANX-P102-1B:
@@ -380,7 +384,7 @@ P100_MCM_8xBW_cons:
 # The names here will be appended to the basefile name with hyphens
 #   For example TITANX-L1ON-PTXPLUS
 PTXPLUS:
-    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 13"
+    extra_params: "-gpgpu_ptx_convert_to_ptxplus 1 -gpgpu_ptx_force_max_capability 10"
 
 SM_2:
     extra_params: "-gpgpu_ptx_force_max_capability 20"
@@ -438,6 +442,9 @@ CTA4:
 
 FLUSHL1:
     extra_params: "-gpgpu_flush_l1_cache 1"
+
+PWR_ENABLE:
+    extra_params: "-power_simulation_enabled 1"
 
 # Experimental - for SM 60 PTXplus support
 PTXPLUS_SM6:
@@ -498,6 +505,7 @@ FT:
 
 SMP:
     extra_params: "-mcm_sm_vm_ft_latency 20000"
+
 
 ##############################################################################
 ##############################################################################

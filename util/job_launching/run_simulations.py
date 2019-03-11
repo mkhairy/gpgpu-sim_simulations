@@ -176,6 +176,11 @@ class ConfigurationSpec:
         else:
             txt_args = command_line_args
 
+        if os.getenv("TORQUE_QUEUE_NAME") == None:
+            queue_name = "batch"
+        else:
+            queue_name = os.getenv("TORQUE_QUEUE_NAME")
+
         replacement_dict = {"NAME":benchmark + "-" + self.benchmark_args_subdirs[command_line_args] + "." +\
                                 gpgpusim_build_handle,
                             "NODES":"1", 
@@ -186,6 +191,7 @@ class ConfigurationSpec:
                             "BENCHMARK_SPECIFIC_COMMAND":benchmark_command_line,
                             "PATH":os.getenv("PATH"),
                             "EXEC_NAME":exec_name,
+                            "QUEUE_NAME":queue_name,
                             "COMMAND_LINE":txt_args}
         torque_text = open(this_directory + "torque.sim").read().strip()
         for entry in replacement_dict:
@@ -251,6 +257,7 @@ if not any([os.path.isfile(os.path.join(p, "qsub")) for p in os.getenv("PATH").s
 
 if not any([os.path.isfile(os.path.join(p, "nvcc")) for p in os.getenv("PATH").split(os.pathsep)]):
     exit("ERROR - Cannot find nvcc PATH... Is CUDA_INSTALL_PATH/bin in the system PATH?")
+
 
 benchmarks = []
 benchmarks = common.gen_apps_from_suite_list(options.benchmark_list.split(","))

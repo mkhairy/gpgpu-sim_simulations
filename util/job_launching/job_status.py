@@ -288,8 +288,6 @@ for logfile in parsed_logfiles:
                 failed_job_text += "------------------\n"
                 failed_job_text += "**********************************************************\n"
                 a_job_failed = True
-            if "FUNC_TEST_PASSED" == status_string:
-                num_passed += 1
 
         print "-" * len(header)
         if num_passed == num_jobs:
